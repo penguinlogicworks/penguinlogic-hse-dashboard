@@ -12,8 +12,9 @@
 const CACHE_PREFIX =
   "penguinlogic-hse-";
 
+
 const CACHE_NAME =
-  `${CACHE_PREFIX}v4`;
+  `${CACHE_PREFIX}v8`;
 
 
 // Core files required for the app
@@ -51,7 +52,7 @@ const OPTIONAL_FILES = [
 
 self.addEventListener(
   "install",
-  (event) => {
+  event => {
 
     event.waitUntil(
 
@@ -63,15 +64,22 @@ self.addEventListener(
           );
 
 
-        // Core files must be cached
+        /*
+          Core application files must be available
+          for the app to work offline.
+        */
         await cache.addAll(
           CORE_FILES
         );
 
 
-        // Icons are cached individually
-        // so a missing icon will not break
-        // the entire service worker install.
+        /*
+          Cache PWA icons separately.
+
+          If an icon is temporarily unavailable,
+          it will not prevent the whole Service
+          Worker from installing.
+        */
         await Promise.allSettled(
 
           OPTIONAL_FILES.map(
@@ -84,6 +92,10 @@ self.addEventListener(
         );
 
 
+        /*
+          Activate the new Service Worker
+          without waiting for old tabs to close.
+        */
         await self.skipWaiting();
 
       })()
@@ -101,7 +113,7 @@ self.addEventListener(
 
 self.addEventListener(
   "activate",
-  (event) => {
+  event => {
 
     event.waitUntil(
 
@@ -111,6 +123,13 @@ self.addEventListener(
           await caches.keys();
 
 
+        /*
+          Delete only old caches belonging to
+          PenguinLogic HSE.
+
+          Other caches on the same origin are
+          left untouched.
+        */
         await Promise.all(
 
           cacheNames
@@ -136,6 +155,10 @@ self.addEventListener(
         );
 
 
+        /*
+          Allow this Service Worker to control
+          currently open pages immediately.
+        */
         await self.clients.claim();
 
       })()
@@ -152,15 +175,21 @@ self.addEventListener(
 
 self.addEventListener(
   "fetch",
-  (event) => {
+  event => {
 
     const request =
       event.request;
 
 
-    // Only process GET requests
+    /*
+      Only handle GET requests.
+
+      IndexedDB records and other browser
+      operations are not affected.
+    */
     if (
-      request.method !== "GET"
+      request.method !==
+      "GET"
     ) {
 
       return;
@@ -174,7 +203,12 @@ self.addEventListener(
       );
 
 
-    // Ignore external resources
+    /*
+      Only handle files from the same origin.
+
+      External websites, APIs or third-party
+      resources are ignored.
+    */
     if (
       requestURL.origin !==
       self.location.origin
@@ -187,7 +221,7 @@ self.addEventListener(
 
     // ==================================================
     // PAGE NAVIGATION
-    // Network first → cached app fallback
+    // Network first → cached page fallback
     // ==================================================
 
     if (
@@ -201,6 +235,9 @@ self.addEventListener(
 
           try {
 
+            /*
+              Prefer the latest online version.
+            */
             const networkResponse =
               await fetch(
                 request
@@ -218,9 +255,16 @@ self.addEventListener(
                 );
 
 
+              /*
+                Store the latest page as the
+                offline fallback.
+              */
               await cache.put(
+
                 "./index.html",
+
                 networkResponse.clone()
+
               );
 
             }
@@ -228,7 +272,15 @@ self.addEventListener(
 
             return networkResponse;
 
-          } catch (error) {
+
+          } catch (
+            error
+          ) {
+
+            /*
+              Device is offline or the network
+              request failed.
+            */
 
             const cachedPage =
               await caches.match(
@@ -275,11 +327,12 @@ self.addEventListener(
 
 
     // ==================================================
-    // STATIC APP FILES
+    // STATIC APPLICATION FILES
     // Network first → cache fallback
     //
-    // This avoids old cached app.js/style.css
-    // being used when a new version is available.
+    // This prevents outdated app.js, style.css,
+    // manifest.json or icons from being used
+    // when a newer version is available.
     // ==================================================
 
     event.respondWith(
@@ -294,6 +347,9 @@ self.addEventListener(
             );
 
 
+          /*
+            Cache only successful responses.
+          */
           if (
             networkResponse &&
             networkResponse.ok
@@ -306,8 +362,11 @@ self.addEventListener(
 
 
             await cache.put(
+
               request,
+
               networkResponse.clone()
+
             );
 
           }
@@ -315,8 +374,15 @@ self.addEventListener(
 
           return networkResponse;
 
-        } catch (error) {
 
+        } catch (
+          error
+        ) {
+
+          /*
+            Network unavailable:
+            try the cached copy.
+          */
           const cachedResponse =
             await caches.match(
               request
@@ -333,8 +399,11 @@ self.addEventListener(
 
 
           console.error(
+
             "Offline resource unavailable:",
+
             request.url
+
           );
 
 
