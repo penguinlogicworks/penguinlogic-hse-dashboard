@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="theme-color"
+    content="#6d5dfc"
+  />
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  />
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="default"
+  />
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="PenguinHSE"
+  />
+
+  <meta
+    name="description"
+    content="Offline-first HSE near-miss reporting and risk assessment dashboard."
+  />
+
+
+  <title>
+    PenguinLogic HSE Dashboard
+  </title>
+
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  />
+
+  <link
+    rel="apple-touch-icon"
+    href="icons/icon-192.png"
+  />
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================================
+       APP HEADER
+  ========================================== -->
+
+  <header class="app-header">
+
+    <div>
+
+      <h1>
+        PenguinLogic HSE
+      </h1>
+
+      <p>
+        Near-Miss & Risk Dashboard
+      </p>
+
+    </div>
+
+
+    <div
+      id="connectionStatus"
+      class="status-badge"
+      aria-live="polite"
+    >
+      Checking...
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================================
+       MAIN CONTENT
+  ========================================== -->
+
+  <main class="container">
+
+
+    <!-- =========================================
+         DASHBOARD STATISTICS
+    ========================================== -->
+
+    <section class="dashboard-grid">
+
+
+      <div class="card stat-card">
+
+        <span>
+          Total Near Misses
+        </span>
+
+        <strong id="totalRecords">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="card stat-card">
+
+        <span>
+          High / Critical Risk
+        </span>
+
+        <strong id="highRiskCount">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="card stat-card">
+
+        <span>
+          Average Risk Score
+        </span>
+
+        <strong id="averageRisk">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="card stat-card">
+
+        <span>
+          Top Hazard
+        </span>
+
+        <strong id="topHazard">
+          -
+        </strong>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =========================================
+         5 × 5 RISK MATRIX
+    ========================================== -->
+
+    <section class="card">
+
+      <h2>
+        5×5 Risk Matrix
+      </h2>
+
+      <p class="section-description">
+        Risk Score = Likelihood × Severity
+      </p>
+
+
+      <div class="risk-matrix-wrapper">
+
+        <div class="risk-matrix">
+
+
+          <!-- HEADERS -->
+
+          <div class="matrix-empty"></div>
+
+          <div class="matrix-header">
+            S1
+          </div>
+
+          <div class="matrix-header">
+            S2
+          </div>
+
+          <div class="matrix-header">
+            S3
+          </div>
+
+          <div class="matrix-header">
+            S4
+          </div>
+
+          <div class="matrix-header">
+            S5
+          </div>
+
+
+          <!-- LIKELIHOOD 5 -->
+
+          <div class="matrix-header">
+            L5
+          </div>
+
+          <div
+            class="matrix-cell medium"
+            data-score="5"
+          >
+            5
+          </div>
+
+          <div
+            class="matrix-cell high"
+            data-score="10"
+          >
+            10
+          </div>
+
+          <div
+            class="matrix-cell high"
+            data-score="15"
+          >
+            15
+          </div>
+
+          <div
+            class="matrix-cell critical"
+            data-score="20"
+          >
+            20
+          </div>
+
+          <div
+            class="matrix-cell critical"
+            data-score="25"
+          >
+            25
+          </div>
+
+
+          <!-- LIKELIHOOD 4 -->
+
+          <div class="matrix-header">
+            L4
+          </div>
+
+          <div
+            class="matrix-cell low"
+            data-score="4"
+          >
+            4
+          </div>
+
+          <div
+            class="matrix-cell medium"
+            data-score="8"
+          >
+            8
+          </div>
+
+          <div
+            class="matrix-cell high"
+            data-score="12"
+          >
+            12
+          </div>
+
+          <div
+            class="matrix-cell high"
+            data-score="16"
+          >
+            16
+          </div>
+
+          <div
+            class="matrix-cell critical"
+            data-score="20"
+          >
+            20
+          </div>
+
+
+          <!-- LIKELIHOOD 3 -->
+
+          <div class="matrix-header">
+            L3
+          </div>
+
+          <div
+            class="matrix-cell low"
+            data-score="3"
+          >
+            3
+          </div>
+
+          <div
+            class="matrix-cell medium"
+            data-score="6"
+          >
+            6
+          </div>
+
+          <div
+            class="matrix-cell medium"
+            data-score="9"
+          >
+            9
+          </div>
+
+          <div
+            class="matrix-cell high"
+            data-score="12"
+          >
+            12
+          </div>
+
+          <div
+            class="matrix-cell high"
+            data-score="15"
+          >
+            15
+          </div>
+
+
+          <!-- LIKELIHOOD 2 -->
+
+          <div class="matrix-header">
+            L2
+          </div>
+
+          <div
+            class="matrix-cell low"
+            data-score="2"
+          >
+            2
+          </div>
+
+          <div
+            class="matrix-cell low"
+            data-score="4"
+          >
+            4
+          </div>
+
+          <div
+            class="matrix-cell medium"
+            data-score="6"
+          >
+            6
+          </div>
+
+          <div
+            class="matrix-cell medium"
+            data-score="8"
+          >
+            8
+          </div>
+
+          <div
+            class="matrix-cell high"
+            data-score="10"
+          >
+            10
+          </div>
+
+
+          <!-- LIKELIHOOD 1 -->
+
+          <div class="matrix-header">
+            L1
+          </div>
+
+          <div
+            class="matrix-cell low"
+            data-score="1"
+          >
+            1
+          </div>
+
+          <div
+            class="matrix-cell low"
+            data-score="2"
+          >
+            2
+          </div>
+
+          <div
+            class="matrix-cell low"
+            data-score="3"
+          >
+            3
+          </div>
+
+          <div
+            class="matrix-cell low"
+            data-score="4"
+          >
+            4
+          </div>
+
+          <div
+            class="matrix-cell medium"
+            data-score="5"
+          >
+            5
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- RISK LEGEND -->
+
+      <div class="matrix-legend">
+
+        <span class="legend-item risk-low">
+          Low: 1–4
+        </span>
+
+        <span class="legend-item risk-medium">
+          Medium: 5–9
+        </span>
+
+        <span class="legend-item risk-high">
+          High: 10–16
+        </span>
+
+        <span class="legend-item risk-critical">
+          Critical: 17–25
+        </span>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         NEAR-MISS FORM
+    ========================================== -->
+
+    <section class="card">
+
+      <h2>
+        Report Near Miss
+      </h2>
+
+
+      <form id="nearMissForm">
+
+
+        <div class="form-grid">
+
+
+          <!-- DATE -->
+
+          <div>
+
+            <label for="date">
+              Date
+            </label>
+
+            <input
+              type="date"
+              id="date"
+              required
+            />
+
+          </div>
+
+
+          <!-- AREA -->
+
+          <div>
+
+            <label for="area">
+              Area
+            </label>
+
+            <select
+              id="area"
+              required
+            >
+
+              <option value="">
+                Select area
+              </option>
+
+              <option>
+                Workshop
+              </option>
+
+              <option>
+                Warehouse
+              </option>
+
+              <option>
+                Loading Bay
+              </option>
+
+              <option>
+                Office
+              </option>
+
+              <option>
+                Hangar
+              </option>
+
+              <option>
+                Offshore Deck
+              </option>
+
+              <option>
+                Engine Room
+              </option>
+
+              <option>
+                Helideck
+              </option>
+
+              <option>
+                Other
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- HAZARD -->
+
+          <div>
+
+            <label for="hazard">
+              Hazard Category
+            </label>
+
+            <select
+              id="hazard"
+              required
+            >
+
+              <option value="">
+                Select hazard
+              </option>
+
+              <option>
+                Manual Handling
+              </option>
+
+              <option>
+                Slip Trip Fall
+              </option>
+
+              <option>
+                Vehicle Movement
+              </option>
+
+              <option>
+                Working at Height
+              </option>
+
+              <option>
+                Dropped Object
+              </option>
+
+              <option>
+                Electrical
+              </option>
+
+              <option>
+                Chemical Exposure
+              </option>
+
+              <option>
+                Fire
+              </option>
+
+              <option>
+                Gas Release
+              </option>
+
+              <option>
+                Machine Guarding
+              </option>
+
+              <option>
+                Ergonomic
+              </option>
+
+              <option>
+                Confined Space
+              </option>
+
+              <option>
+                Fatigue
+              </option>
+
+              <option>
+                Other
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- LIKELIHOOD -->
+
+          <div>
+
+            <label for="likelihood">
+              Likelihood
+            </label>
+
+            <select
+              id="likelihood"
+              required
+            >
+
+              <option value="">
+                Select
+              </option>
+
+              <option value="1">
+                1 - Rare
+              </option>
+
+              <option value="2">
+                2 - Unlikely
+              </option>
+
+              <option value="3">
+                3 - Possible
+              </option>
+
+              <option value="4">
+                4 - Likely
+              </option>
+
+              <option value="5">
+                5 - Almost Certain
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- SEVERITY -->
+
+          <div>
+
+            <label for="severity">
+              Severity
+            </label>
+
+            <select
+              id="severity"
+              required
+            >
+
+              <option value="">
+                Select
+              </option>
+
+              <option value="1">
+                1 - Insignificant
+              </option>
+
+              <option value="2">
+                2 - Minor
+              </option>
+
+              <option value="3">
+                3 - Moderate
+              </option>
+
+              <option value="4">
+                4 - Major
+              </option>
+
+              <option value="5">
+                5 - Catastrophic
+              </option>
+
+            </select>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- LIVE RISK PREVIEW -->
+
+        <div class="risk-preview">
+
+          <span>
+            Risk Score
+          </span>
+
+          <strong id="riskScore">
+            -
+          </strong>
+
+          <span
+            id="riskLevel"
+            class="risk-level"
+            aria-live="polite"
+          >
+            Select likelihood and severity
+          </span>
+
+        </div>
+
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-full">
+
+          <label for="description">
+            Near-Miss Description
+          </label>
+
+          <textarea
+            id="description"
+            rows="4"
+            placeholder="Describe what happened..."
+            required
+          ></textarea>
+
+        </div>
+
+
+
+        <!-- CONSEQUENCE -->
+
+        <div class="form-full">
+
+          <label for="consequence">
+            Potential Consequence
+          </label>
+
+          <textarea
+            id="consequence"
+            rows="3"
+            placeholder="What could have happened?"
+            required
+          ></textarea>
+
+        </div>
+
+
+
+        <!-- ACTION -->
+
+        <div class="form-full">
+
+          <label for="action">
+            Immediate Action Taken
+          </label>
+
+          <textarea
+            id="action"
+            rows="3"
+            placeholder="What action was taken?"
+          ></textarea>
+
+        </div>
+
+
+
+        <!-- EVIDENCE -->
+
+        <div class="form-full">
+
+          <label for="evidence">
+
+            Evidence
+
+            <span
+              style="
+                font-weight: 400;
+                color: #6b7280;
+              "
+            >
+              (Optional)
+            </span>
+
+          </label>
+
+          <input
+            type="file"
+            id="evidence"
+            accept="image/*,application/pdf"
+          />
+
+          <small
+            style="
+              display: block;
+              margin-top: 6px;
+              color: #6b7280;
+            "
+          >
+            Upload one image or PDF.
+            Maximum file size: 10 MB.
+          </small>
+
+        </div>
+
+
+
+        <!-- SUBMIT -->
+
+        <button
+          type="submit"
+          class="primary-button"
+        >
+          Save Near-Miss Record
+        </button>
+
+
+      </form>
+
+    </section>
+
+
+
+    <!-- =========================================
+         RECORDS
+    ========================================== -->
+
+    <section class="card">
+
+
+      <div class="section-header">
+
+        <div>
+
+          <h2>
+            Near-Miss Records
+          </h2>
+
+          <p>
+            Stored locally on this device.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- FILTERS -->
+
+      <div class="filter-grid">
+
+
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search area, hazard, description..."
+          aria-label="Search near-miss records"
+        />
+
+
+        <select
+          id="riskFilter"
+          aria-label="Filter by risk level"
+        >
+
+          <option value="">
+            All Risk Levels
+          </option>
+
+          <option value="Low">
+            Low
+          </option>
+
+          <option value="Medium">
+            Medium
+          </option>
+
+          <option value="High">
+            High
+          </option>
+
+          <option value="Critical">
+            Critical
+          </option>
+
+        </select>
+
+
+        <select
+          id="areaFilter"
+          aria-label="Filter by area"
+        >
+
+          <option value="">
+            All Areas
+          </option>
+
+          <option>
+            Workshop
+          </option>
+
+          <option>
+            Warehouse
+          </option>
+
+          <option>
+            Loading Bay
+          </option>
+
+          <option>
+            Office
+          </option>
+
+          <option>
+            Hangar
+          </option>
+
+          <option>
+            Offshore Deck
+          </option>
+
+          <option>
+            Engine Room
+          </option>
+
+          <option>
+            Helideck
+          </option>
+
+          <option>
+            Other
+          </option>
+
+        </select>
+
+
+      </div>
+
+
+
+      <!-- RECORD TABLE -->
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Date
+              </th>
+
+              <th>
+                Area
+              </th>
+
+              <th>
+                Hazard
+              </th>
+
+              <th>
+                Risk
+              </th>
+
+              <th>
+                Level
+              </th>
+
+              <th>
+                Evidence
+              </th>
+
+              <th>
+                Report
+              </th>
+
+              <th>
+                Action
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="recordsTable">
+
+            <tr>
+
+              <td colspan="8">
+                No records yet.
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =========================================
+       NEAR-MISS REPORT VIEWER
+  ========================================== -->
+
+  <div
+    id="reportModal"
+    class="report-modal-backdrop hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="reportModalTitle"
+  >
+
+    <div class="report-modal-shell">
+
+
+      <!-- REPORT TOOLBAR -->
+
+      <div class="report-toolbar">
+
+        <div>
+
+          <strong id="reportModalTitle">
+            Near-Miss Report
+          </strong>
+
+          <span class="report-toolbar-note">
+            Review the report before printing or saving as PDF.
+          </span>
+
+        </div>
+
+
+        <div class="report-toolbar-actions">
+
+          <button
+            type="button"
+            id="reportClose"
+            class="secondary-button"
+          >
+            Close
+          </button>
+
+          <button
+            type="button"
+            id="reportPrint"
+            class="primary-button report-print-button"
+          >
+            Print / Save PDF
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =========================================
+           PRINTABLE REPORT
+      ========================================== -->
+
+      <article
+        id="reportDocument"
+        class="near-miss-report"
+      >
+
+
+        <!-- REPORT HEADER -->
+
+        <header class="report-header">
+
+          <div class="report-brand">
+
+            <div class="report-brand-mark">
+              PL
+            </div>
+
+            <div>
+
+              <h1>
+                PenguinLogic HSE
+              </h1>
+
+              <p>
+                Health, Safety & Environment
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="report-document-title">
+
+            <span>
+              HSE RECORD
+            </span>
+
+            <h2>
+              NEAR-MISS REPORT
+            </h2>
+
+          </div>
+
+        </header>
+
+
+
+        <!-- REPORT REFERENCE -->
+
+        <section class="report-reference">
+
+          <div>
+
+            <span class="report-label">
+              Report No.
+            </span>
+
+            <strong id="reportNumber">
+              -
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span class="report-label">
+              Event Type
+            </span>
+
+            <strong>
+              Near Miss
+            </strong>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- BASIC INFORMATION -->
+
+        <section class="report-section">
+
+          <h3>
+            1. Report Information
+          </h3>
+
+
+          <div class="report-info-grid">
+
+
+            <div class="report-info-item">
+
+              <span class="report-label">
+                Date
+              </span>
+
+              <strong id="reportDate">
+                -
+              </strong>
+
+            </div>
+
+
+            <div class="report-info-item">
+
+              <span class="report-label">
+                Area
+              </span>
+
+              <strong id="reportArea">
+                -
+              </strong>
+
+            </div>
+
+
+            <div class="report-info-item report-info-wide">
+
+              <span class="report-label">
+                Hazard Category
+              </span>
+
+              <strong id="reportHazard">
+                -
+              </strong>
+
+            </div>
+
+
+          </div>
+
+        </section>
+
+
+
+        <!-- RISK ASSESSMENT -->
+
+        <section class="report-section">
+
+          <h3>
+            2. Risk Assessment
+          </h3>
+
+
+          <div class="report-risk-grid">
+
+
+            <div class="report-risk-item">
+
+              <span class="report-label">
+                Likelihood
+              </span>
+
+              <strong id="reportLikelihood">
+                -
+              </strong>
+
+            </div>
+
+
+            <div class="report-risk-item">
+
+              <span class="report-label">
+                Severity
+              </span>
+
+              <strong id="reportSeverity">
+                -
+              </strong>
+
+            </div>
+
+
+            <div class="report-risk-item">
+
+              <span class="report-label">
+                Risk Score
+              </span>
+
+              <strong id="reportRiskScore">
+                -
+              </strong>
+
+            </div>
+
+
+            <div class="report-risk-item">
+
+              <span class="report-label">
+                Risk Level
+              </span>
+
+              <span
+                id="reportRiskLevel"
+                class="risk-level"
+              >
+                -
+              </span>
+
+            </div>
+
+
+          </div>
+
+        </section>
+
+
+
+        <!-- DESCRIPTION -->
+
+        <section class="report-section">
+
+          <h3>
+            3. Near-Miss Description
+          </h3>
+
+          <div
+            id="reportDescription"
+            class="report-text-box"
+          >
+            -
+          </div>
+
+        </section>
+
+
+
+        <!-- POTENTIAL CONSEQUENCE -->
+
+        <section class="report-section">
+
+          <h3>
+            4. Potential Consequence
+          </h3>
+
+          <div
+            id="reportConsequence"
+            class="report-text-box"
+          >
+            -
+          </div>
+
+        </section>
+
+
+
+        <!-- IMMEDIATE ACTION -->
+
+        <section class="report-section">
+
+          <h3>
+            5. Immediate Action Taken
+          </h3>
+
+          <div
+            id="reportAction"
+            class="report-text-box"
+          >
+            -
+          </div>
+
+        </section>
+
+
+
+        <!-- EVIDENCE -->
+
+        <section
+          id="reportEvidenceSection"
+          class="report-section"
+        >
+
+          <h3>
+            6. Supporting Evidence
+          </h3>
+
+
+          <div class="report-evidence-box">
+
+            <div
+              id="reportEvidencePreview"
+              class="report-evidence-preview"
+            ></div>
+
+
+            <div class="report-evidence-details">
+
+              <span class="report-label">
+                Attachment
+              </span>
+
+              <strong id="reportEvidenceName">
+                No evidence attached
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- RECORD INFORMATION -->
+
+        <section class="report-section">
+
+          <h3>
+            7. Record Information
+          </h3>
+
+
+          <div class="report-record-information">
+
+            <div>
+
+              <span class="report-label">
+                Record Created
+              </span>
+
+              <strong id="reportCreatedAt">
+                -
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- REPORT FOOTER -->
+
+        <footer class="report-footer">
+
+          <div>
+
+            <strong>
+              PenguinLogic HSE
+            </strong>
+
+            <span>
+              Near-Miss & Risk Dashboard
+            </span>
+
+          </div>
+
+
+          <div>
+            This report was generated from a locally stored HSE record.
+          </div>
+
+        </footer>
+
+
+      </article>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================
+       TOAST NOTIFICATION
+  ========================================== -->
+
+  <div
+    id="toast"
+    class="toast hidden"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+
+    <span id="toastMessage"></span>
+
+  </div>
+
+
+
+  <!-- =========================================
+       CUSTOM CONFIRMATION MODAL
+  ========================================== -->
+
+  <div
+    id="confirmModal"
+    class="modal-backdrop hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="confirmTitle"
+    aria-describedby="confirmMessage"
+  >
+
+    <div class="modal-box">
+
+      <h3 id="confirmTitle">
+        Confirm Action
+      </h3>
+
+      <p id="confirmMessage">
+        Are you sure?
+      </p>
+
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          id="confirmCancel"
+          class="secondary-button"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          id="confirmOk"
+          class="danger-button"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================
+       JAVASCRIPT
+       db.js MUST load before app.js
+  ========================================== -->
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+
+
+</body>
+
+</html>
