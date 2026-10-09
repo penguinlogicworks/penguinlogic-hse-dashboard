@@ -1,43 +1,101 @@
 # PenguinLogic HSE Dashboard
 
-An offline-first Health, Safety & Environment (HSE) near-miss reporting and risk assessment dashboard built as a Progressive Web App (PWA).
+PenguinLogic HSE Dashboard is an offline-first web application for basic HSE near-miss reporting and risk assessment.
 
-The application allows users to record near-miss events, assess risk using a 5×5 risk matrix, attach supporting evidence, review stored records, and generate printable HSE reports.
+## Features
 
-## Live Demo
-
-https://penguinlogicworks.github.io/penguinlogic-hse-dashboard/
-
----
-
-## Key Features
-
-- Near-miss incident reporting
+- Near-miss reporting form
+- 5×5 risk matrix
 - Automatic risk score calculation
-- 5×5 HSE risk assessment matrix
-- Risk classification:
-  - Low: 1–4
-  - Medium: 5–9
-  - High: 10–16
-  - Critical: 17–25
-- Dashboard statistics
-- Search and filter records
-- Supporting evidence upload
-  - Images
-  - PDF documents
-  - Maximum file size: 10 MB
-- View individual HSE reports
-- Print / Save report as PDF
+- Risk levels: Low, Medium, High and Critical
+- Image and PDF evidence upload
+- Search and filter near-miss records
+- View stored evidence
+- View complete near-miss report
+- Print or Save Report as PDF
 - Local data storage using IndexedDB
-- Offline-capable PWA
-- Responsive interface for desktop and mobile devices
-- Installable on supported browsers and devices
-
----
+- Offline Progressive Web App (PWA)
+- Responsive for desktop and mobile
 
 ## Risk Calculation
 
-Risk is calculated using:
-
-```text
 Risk Score = Likelihood × Severity
+
+| Score | Level |
+|---|---|
+| 1–4 | Low |
+| 5–9 | Medium |
+| 10–16 | High |
+| 17–25 | Critical |
+
+## Near-Miss Report
+
+Each saved record can generate a structured report containing:
+
+- Report number
+- Date
+- Area
+- Hazard category
+- Likelihood
+- Severity
+- Risk score
+- Risk level
+- Near-miss description
+- Potential consequence
+- Immediate action taken
+- Supporting evidence
+- Record creation date
+
+The report can be printed or saved as PDF.
+
+## Technology
+
+- HTML
+- CSS
+- JavaScript
+- IndexedDB
+- Service Worker
+- Progressive Web App
+- GitHub Pages
+
+## Live App
+
+https://penguinlogicworks.github.io/penguinlogic-hse-dashboard/
+
+## Data Storage
+
+All near-miss records are stored locally on the user's device.
+
+No login or cloud database is required.
+
+## Disclaimer
+
+This project is intended for portfolio and demonstration purposes.
+
+It does not replace formal HIRARC, JSA/JHA, HAZOP, incident investigation procedures or an organisation's official HSE management system.
+
+## Author
+
+PenguinLogic
+
+Technical portfolio projects focused on practical applications of:
+
+- Safety
+- HSE
+- Research
+- Data
+- Technology
+- Web-based tools
+
+---
+
+## License / Usage
+
+This repository is currently maintained as a personal technical portfolio project.
+
+Unless a separate license is added to the repository, the presence of source code in this public repository should not automatically be interpreted as granting unrestricted reuse, redistribution, or commercial licensing rights.
+
+---
+
+**PenguinLogic HSE Dashboard**  
+*Near-Miss Reporting & Risk Assessment*
