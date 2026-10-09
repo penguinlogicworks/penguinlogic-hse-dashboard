@@ -14,7 +14,7 @@ const CACHE_PREFIX =
 
 
 const CACHE_NAME =
-  `${CACHE_PREFIX}v8`;
+  `${CACHE_PREFIX}v9`;
 
 
 // Core files required for the app
@@ -65,8 +65,12 @@ self.addEventListener(
 
 
         /*
-          Core application files must be available
-          for the app to work offline.
+          Core application files are required
+          for offline operation.
+
+          If one of these files cannot be fetched,
+          the Service Worker installation will fail
+          instead of installing an incomplete app.
         */
         await cache.addAll(
           CORE_FILES
@@ -74,10 +78,10 @@ self.addEventListener(
 
 
         /*
-          Cache PWA icons separately.
+          Icons are optional during installation.
 
-          If an icon is temporarily unavailable,
-          it will not prevent the whole Service
+          They are cached separately so a temporary
+          missing icon does not prevent the Service
           Worker from installing.
         */
         await Promise.allSettled(
@@ -93,8 +97,9 @@ self.addEventListener(
 
 
         /*
-          Activate the new Service Worker
-          without waiting for old tabs to close.
+          Activate this Service Worker immediately
+          instead of waiting for old browser tabs
+          or PWA sessions to close.
         */
         await self.skipWaiting();
 
@@ -108,7 +113,7 @@ self.addEventListener(
 
 // ======================================================
 // ACTIVATE
-// Remove old PenguinLogic HSE caches only
+// Remove previous PenguinLogic HSE caches
 // ======================================================
 
 self.addEventListener(
@@ -124,11 +129,10 @@ self.addEventListener(
 
 
         /*
-          Delete only old caches belonging to
-          PenguinLogic HSE.
+          Delete only old PenguinLogic HSE caches.
 
-          Other caches on the same origin are
-          left untouched.
+          Other caches that may exist on the same
+          origin are not touched.
         */
         await Promise.all(
 
@@ -156,8 +160,8 @@ self.addEventListener(
 
 
         /*
-          Allow this Service Worker to control
-          currently open pages immediately.
+          Allow the new Service Worker to control
+          already-open pages immediately.
         */
         await self.clients.claim();
 
@@ -182,10 +186,10 @@ self.addEventListener(
 
 
     /*
-      Only handle GET requests.
+      Only intercept GET requests.
 
-      IndexedDB records and other browser
-      operations are not affected.
+      IndexedDB data, form operations and other
+      non-GET browser actions are not affected.
     */
     if (
       request.method !==
@@ -204,10 +208,7 @@ self.addEventListener(
 
 
     /*
-      Only handle files from the same origin.
-
-      External websites, APIs or third-party
-      resources are ignored.
+      Ignore resources from external origins.
     */
     if (
       requestURL.origin !==
@@ -221,7 +222,7 @@ self.addEventListener(
 
     // ==================================================
     // PAGE NAVIGATION
-    // Network first → cached page fallback
+    // Network first → cache fallback
     // ==================================================
 
     if (
@@ -236,7 +237,8 @@ self.addEventListener(
           try {
 
             /*
-              Prefer the latest online version.
+              Prefer the latest page from
+              the network whenever online.
             */
             const networkResponse =
               await fetch(
@@ -256,8 +258,8 @@ self.addEventListener(
 
 
               /*
-                Store the latest page as the
-                offline fallback.
+                Keep the newest index.html
+                available for offline use.
               */
               await cache.put(
 
@@ -278,10 +280,10 @@ self.addEventListener(
           ) {
 
             /*
-              Device is offline or the network
-              request failed.
-            */
+              Network unavailable.
 
+              Try cached index.html first.
+            */
             const cachedPage =
               await caches.match(
                 "./index.html"
@@ -297,6 +299,9 @@ self.addEventListener(
             }
 
 
+            /*
+              Fallback to cached app root.
+            */
             const cachedRoot =
               await caches.match(
                 "./"
@@ -312,6 +317,9 @@ self.addEventListener(
             }
 
 
+            /*
+              No cached page is available.
+            */
             throw error;
 
           }
@@ -330,9 +338,15 @@ self.addEventListener(
     // STATIC APPLICATION FILES
     // Network first → cache fallback
     //
-    // This prevents outdated app.js, style.css,
-    // manifest.json or icons from being used
-    // when a newer version is available.
+    // Applies to:
+    // - app.js
+    // - style.css
+    // - db.js
+    // - manifest.json
+    // - icons
+    //
+    // Network-first helps prevent old app code
+    // remaining active after deployment.
     // ==================================================
 
     event.respondWith(
@@ -348,7 +362,7 @@ self.addEventListener(
 
 
           /*
-            Cache only successful responses.
+            Store only successful responses.
           */
           if (
             networkResponse &&
@@ -380,8 +394,7 @@ self.addEventListener(
         ) {
 
           /*
-            Network unavailable:
-            try the cached copy.
+            If offline, try the cached version.
           */
           const cachedResponse =
             await caches.match(
