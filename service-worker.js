@@ -14,7 +14,7 @@ const CACHE_PREFIX =
 
 
 const CACHE_NAME =
-  `${CACHE_PREFIX}v15`;
+  `${CACHE_PREFIX}v16`;
 
 
 // Core files required for the app
