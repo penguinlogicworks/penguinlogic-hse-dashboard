@@ -1155,20 +1155,28 @@ tbody tr:last-child td {
   align-items: center;
   justify-content: center;
 
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
 
   flex-shrink: 0;
 
-  border-radius: 11px;
+  overflow: hidden;
 
-  background: #6d5dfc;
-  color: #ffffff;
+  border-radius: 12px;
 
-  font-size: 1rem;
-  font-weight: 800;
+  background: transparent;
+}
 
-  letter-spacing: 0.04em;
+
+.report-brand-logo {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  border-radius: 12px;
 }
 
 .report-brand h1 {
