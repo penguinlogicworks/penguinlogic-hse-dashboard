@@ -1605,6 +1605,7 @@ tbody tr:last-child td {
 
   .status-badge {
     padding: 6px 9px;
+
     font-size: 0.75rem;
   }
 
@@ -1618,6 +1619,7 @@ tbody tr:last-child td {
 
   .card {
     padding: 16px;
+
     border-radius: 12px;
   }
 
@@ -1857,6 +1859,11 @@ tbody tr:last-child td {
 /* ======================================================
    PRINT SUPPORT
    Prints the currently open report using window.print().
+
+   Important:
+   Mobile layout rules can remain active while iOS/Safari
+   prepares a print document. The rules below explicitly
+   restore the desktop/A4 report layout for printing.
    ====================================================== */
 
 @media print {
@@ -1867,11 +1874,197 @@ tbody tr:last-child td {
   }
 
 
+  /*
+    Reset document dimensions.
+
+    This is especially important on iOS because the
+    installed PWA uses 100dvh while displayed on screen.
+    That viewport height must not restrict the print
+    document.
+  */
+
+  html,
+  body {
+    width: auto !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+
+    background: #ffffff !important;
+
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body.report-open {
+    overflow: visible !important;
+
+    overscroll-behavior: auto !important;
+  }
+
+
+  /*
+    Print only the open Near-Miss Report.
+  */
+
+  body.report-open > *:not(#reportModal) {
+    display: none !important;
+  }
+
+
+  /*
+    Reset modal backdrop.
+
+    During normal mobile use this element is fixed to the
+    viewport. For printing it becomes a normal document
+    element.
+  */
+
+  body.report-open #reportModal {
+    position: static !important;
+
+    inset: auto !important;
+
+    display: block !important;
+
+    width: auto !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: visible !important;
+
+    background: none !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    pointer-events: auto !important;
+  }
+
+
+  /*
+    Critical iOS print fix.
+
+    Mobile CSS sets this shell to:
+      height: 100vh;
+      height: 100dvh;
+
+    The print version MUST reset that height or Safari
+    can paginate or clip the report based on the mobile
+    viewport.
+  */
+
+  body.report-open .report-modal-shell {
+    display: block !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+
+    overflow: visible !important;
+
+    background: #ffffff !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+  }
+
+
+  /*
+    Toolbar must not appear in the printed report.
+  */
+
+  body.report-open .report-toolbar {
+    display: none !important;
+  }
+
+
+  /*
+    Reset the report document itself.
+
+    This also removes the mobile screen padding and
+    scrolling behaviour before A4 pagination occurs.
+  */
+
+  body.report-open .near-miss-report {
+    display: block !important;
+
+    flex: none !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: visible !important;
+
+    background: #ffffff !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+  }
+
+
   /* ==================================================
-     FIX REPORT LOGO SIZE IN WEB PRINT / PDF
+     RESTORE DESKTOP / A4 REPORT LAYOUT
+
+     iPhone mobile styles normally stack these elements.
+     Printing must restore the compact A4 arrangement.
      ================================================== */
 
+  body.report-open .report-header {
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+
+    gap: 24px !important;
+
+    padding-bottom: 20px !important;
+  }
+
+  body.report-open .report-brand {
+    display: flex !important;
+
+    flex-direction: row !important;
+    align-items: center !important;
+
+    gap: 13px !important;
+  }
+
+
+  /* Report logo */
+
   body.report-open .report-brand-mark {
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
     width: 12mm !important;
     height: 12mm !important;
 
@@ -1886,8 +2079,9 @@ tbody tr:last-child td {
     overflow: hidden !important;
 
     border-radius: 3mm !important;
-  }
 
+    background: transparent !important;
+  }
 
   body.report-open .report-brand-logo {
     display: block !important;
@@ -1906,79 +2100,138 @@ tbody tr:last-child td {
     border-radius: 3mm !important;
   }
 
-
-  body {
-    background: #ffffff;
-
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  body.report-open .report-brand h1 {
+    font-size: 1.35rem !important;
   }
 
 
-  body.report-open > *:not(#reportModal) {
-    display: none !important;
+  /* HSE RECORD / NEAR-MISS REPORT */
+
+  body.report-open .report-document-title {
+    text-align: right !important;
+  }
+
+  body.report-open .report-document-title h2 {
+    font-size: 1.35rem !important;
   }
 
 
-  body.report-open #reportModal {
-    position: static;
+  /*
+    Report number + event type:
+    restore 2 columns.
+  */
 
-    display: block;
+  body.report-open .report-reference {
+    display: grid !important;
 
-    padding: 0;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
 
-    background: none;
-
-    opacity: 1;
-    visibility: visible;
+    gap: 12px !important;
   }
 
 
-  body.report-open .report-modal-shell {
-    display: block;
+  /*
+    Report Information:
+    Date + Area side-by-side,
+    Hazard Category across full width.
+  */
 
-    width: 100%;
-    max-width: none;
-    max-height: none;
+  body.report-open .report-info-grid {
+    display: grid !important;
 
-    overflow: visible;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
 
-    background: #ffffff;
+    gap: 10px !important;
+  }
 
-    border-radius: 0;
-
-    box-shadow: none;
+  body.report-open .report-info-wide {
+    grid-column:
+      1 / -1 !important;
   }
 
 
-  body.report-open .report-toolbar {
-    display: none;
+  /*
+    Risk Assessment:
+    Likelihood + Severity + Risk Score + Risk Level
+    return to four compact A4 columns.
+  */
+
+  body.report-open .report-risk-grid {
+    display: grid !important;
+
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr)) !important;
+
+    gap: 9px !important;
   }
 
 
-  body.report-open .near-miss-report {
-    width: 100%;
-    max-width: none;
+  /*
+    Footer:
+    restore desktop horizontal layout.
+  */
 
-    margin: 0;
+  body.report-open .report-footer {
+    display: flex !important;
 
-    padding: 0;
+    flex-direction: row !important;
 
-    overflow: visible;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
 
-    border-radius: 0;
+    gap: 24px !important;
+  }
 
-    box-shadow: none;
+  body.report-open .report-footer > div:last-child {
+    max-width: 360px !important;
+
+    text-align: right !important;
   }
 
 
-  .report-section {
+  /* ==================================================
+     PRINT PAGINATION
+     ================================================== */
+
+  /*
+    Keep individual report sections together where
+    possible. Safari may still move an entire section to
+    the next page if there is not enough remaining space.
+  */
+
+  body.report-open .report-section {
     break-inside: avoid;
+
+    page-break-inside: avoid;
+  }
+
+  body.report-open .report-evidence-box,
+  body.report-open .report-record-information,
+  body.report-open .report-footer {
+    break-inside: avoid;
+
+    page-break-inside: avoid;
   }
 
 
-  .report-evidence-image {
-    max-height: 110mm;
+  /*
+    Keep evidence inside a reasonable A4 height.
+  */
+
+  body.report-open .report-evidence-image {
+    display: block !important;
+
+    width: auto !important;
+
+    max-width: 100% !important;
+    max-height: 110mm !important;
+
+    margin:
+      0 auto !important;
+
+    object-fit: contain !important;
   }
 
 }
