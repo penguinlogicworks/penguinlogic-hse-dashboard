@@ -81,7 +81,10 @@ function formatRecordDate(value) {
   if (!value) return "-";
 
   const parts = String(value).split("-");
-  if (parts.length !== 3) return String(value);
+
+  if (parts.length !== 3) {
+    return String(value);
+  }
 
   const year = Number(parts[0]);
   const month = Number(parts[1]);
@@ -256,6 +259,7 @@ function isIOSLikeDevice() {
     MacIntel + multiple touch points separates
     iPadOS from a normal Mac.
   */
+
   const iPadOSDesktopMode =
     platform === "MacIntel" &&
     Number(
@@ -290,15 +294,19 @@ function ensureIOSPrintCompactStyle() {
     styleId;
 
   /*
-    Safari's real Print > Scale control cannot be
-    changed from JavaScript.
+    Safari's actual Print > Scale setting cannot
+    be controlled by JavaScript.
 
-    Therefore this does NOT use:
-    - zoom
-    - transform: scale()
+    iOS therefore receives a compact print layout
+    using real dimensions instead of zoom or
+    transform scaling.
 
-    Instead, iOS print uses genuinely smaller
-    font sizes, spacing, padding and evidence size.
+    174 mm is deliberately narrower than the
+    theoretical A4 printable width.
+
+    This gives Safari extra horizontal tolerance
+    and prevents content from clipping on the
+    right side.
 
     Android and desktop are not affected.
   */
@@ -311,30 +319,151 @@ function ensureIOSPrintCompactStyle() {
       }
 
 
+      /* ==================================================
+         iOS PRINTABLE WIDTH / RIGHT-EDGE CLIPPING FIX
+         ================================================== */
+
+      html.ios-print-compact
+      body.report-open
+      #reportModal,
+
+      html.ios-print-compact
+      body.report-open
+      .report-modal-shell {
+        box-sizing: border-box !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+
+        overflow: visible !important;
+      }
+
+
       html.ios-print-compact
       body.report-open
       .near-miss-report {
+        box-sizing: border-box !important;
+
+        width: 174mm !important;
+        max-width: 174mm !important;
+
+        min-width: 0 !important;
+
+        margin-left: auto !important;
+        margin-right: auto !important;
+
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+
+        overflow: visible !important;
+
         font-size: 13.6px !important;
         line-height: 1.4 !important;
       }
 
 
-      /* ==========================================
+      html.ios-print-compact
+      body.report-open
+      .report-header,
+
+      html.ios-print-compact
+      body.report-open
+      .report-reference,
+
+      html.ios-print-compact
+      body.report-open
+      .report-info-grid,
+
+      html.ios-print-compact
+      body.report-open
+      .report-risk-grid,
+
+      html.ios-print-compact
+      body.report-open
+      .report-text-box,
+
+      html.ios-print-compact
+      body.report-open
+      .report-evidence-box,
+
+      html.ios-print-compact
+      body.report-open
+      .report-record-information,
+
+      html.ios-print-compact
+      body.report-open
+      .report-footer {
+        box-sizing: border-box !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+      }
+
+
+      /* ==================================================
          REPORT HEADER
-         ========================================== */
+         ================================================== */
 
       html.ios-print-compact
       body.report-open
       .report-header {
-        gap: 20px !important;
+        gap: 18px !important;
+
         padding-bottom: 17px !important;
       }
 
 
       html.ios-print-compact
       body.report-open
+      .report-header > * {
+        min-width: 0 !important;
+      }
+
+
+      html.ios-print-compact
+      body.report-open
       .report-brand {
+        flex: 1 1 auto !important;
+
+        min-width: 0 !important;
+        max-width: 58% !important;
+
         gap: 11px !important;
+      }
+
+
+      html.ios-print-compact
+      body.report-open
+      .report-document-title {
+        flex: 0 1 42% !important;
+
+        min-width: 0 !important;
+        max-width: 42% !important;
+
+        white-space: normal !important;
+
+        overflow-wrap: anywhere !important;
+
+        text-align: right !important;
+      }
+
+
+      html.ios-print-compact
+      body.report-open
+      .report-document-title h2 {
+        white-space: normal !important;
+
+        overflow-wrap: anywhere !important;
       }
 
 
@@ -372,9 +501,9 @@ function ensureIOSPrintCompactStyle() {
       }
 
 
-      /* ==========================================
+      /* ==================================================
          REPORT REFERENCE
-         ========================================== */
+         ================================================== */
 
       html.ios-print-compact
       body.report-open
@@ -389,19 +518,29 @@ function ensureIOSPrintCompactStyle() {
 
       html.ios-print-compact
       body.report-open
+      .report-reference > div {
+        min-width: 0 !important;
+      }
+
+
+      html.ios-print-compact
+      body.report-open
       .report-label {
         margin-bottom: 3px !important;
       }
 
 
-      /* ==========================================
+      /* ==================================================
          SECTIONS
-         ========================================== */
+         ================================================== */
 
       html.ios-print-compact
       body.report-open
       .report-section {
         margin-top: 18px !important;
+
+        max-width: 100% !important;
+        min-width: 0 !important;
       }
 
 
@@ -414,9 +553,9 @@ function ensureIOSPrintCompactStyle() {
       }
 
 
-      /* ==========================================
+      /* ==================================================
          REPORT INFORMATION
-         ========================================== */
+         ================================================== */
 
       html.ios-print-compact
       body.report-open
@@ -428,13 +567,17 @@ function ensureIOSPrintCompactStyle() {
       html.ios-print-compact
       body.report-open
       .report-info-item {
+        min-width: 0 !important;
+
         padding: 10px !important;
+
+        overflow-wrap: anywhere !important;
       }
 
 
-      /* ==========================================
+      /* ==================================================
          RISK ASSESSMENT
-         ========================================== */
+         ================================================== */
 
       html.ios-print-compact
       body.report-open
@@ -446,20 +589,26 @@ function ensureIOSPrintCompactStyle() {
       html.ios-print-compact
       body.report-open
       .report-risk-item {
+        min-width: 0 !important;
+
         padding: 10px !important;
+
+        overflow-wrap: anywhere !important;
       }
 
 
       html.ios-print-compact
       body.report-open
       .risk-level {
+        max-width: 100% !important;
+
         padding: 5px 8px !important;
       }
 
 
-      /* ==========================================
+      /* ==================================================
          DESCRIPTION / CONSEQUENCE / ACTION
-         ========================================== */
+         ================================================== */
 
       html.ios-print-compact
       body.report-open
@@ -471,17 +620,37 @@ function ensureIOSPrintCompactStyle() {
           12px !important;
 
         line-height: 1.5 !important;
+
+        overflow-wrap: anywhere !important;
       }
 
 
-      /* ==========================================
+      /* ==================================================
          SUPPORTING EVIDENCE
-         ========================================== */
+         ================================================== */
 
       html.ios-print-compact
       body.report-open
       .report-evidence-box {
         padding: 12px !important;
+
+        overflow: hidden !important;
+      }
+
+
+      html.ios-print-compact
+      body.report-open
+      .report-evidence-preview,
+
+      html.ios-print-compact
+      body.report-open
+      .report-evidence-details {
+        box-sizing: border-box !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        min-width: 0 !important;
       }
 
 
@@ -491,13 +660,23 @@ function ensureIOSPrintCompactStyle() {
         margin-top: 10px !important;
 
         padding-top: 10px !important;
+
+        overflow-wrap: anywhere !important;
       }
 
 
       html.ios-print-compact
       body.report-open
       .report-evidence-image {
+        width: auto !important;
+
+        max-width: 100% !important;
         max-height: 93.5mm !important;
+
+        margin-left: auto !important;
+        margin-right: auto !important;
+
+        object-fit: contain !important;
       }
 
 
@@ -508,33 +687,68 @@ function ensureIOSPrintCompactStyle() {
       html.ios-print-compact
       body.report-open
       .report-no-evidence {
+        max-width: 100% !important;
+
         padding: 12px !important;
+
+        overflow-wrap: anywhere !important;
       }
 
 
-      /* ==========================================
+      /* ==================================================
          RECORD INFORMATION
-         ========================================== */
+         ================================================== */
 
       html.ios-print-compact
       body.report-open
       .report-record-information {
         padding: 10px !important;
+
+        overflow-wrap: anywhere !important;
       }
 
 
-      /* ==========================================
+      /* ==================================================
          REPORT FOOTER
-         ========================================== */
+         ================================================== */
 
       html.ios-print-compact
       body.report-open
       .report-footer {
-        gap: 20px !important;
+        gap: 18px !important;
 
         margin-top: 24px !important;
 
         padding-top: 12px !important;
+      }
+
+
+      html.ios-print-compact
+      body.report-open
+      .report-footer > div {
+        min-width: 0 !important;
+
+        overflow-wrap: anywhere !important;
+      }
+
+
+      html.ios-print-compact
+      body.report-open
+      .report-footer > div:first-child {
+        flex: 0 1 38% !important;
+
+        max-width: 38% !important;
+      }
+
+
+      html.ios-print-compact
+      body.report-open
+      .report-footer > div:last-child {
+        flex: 0 1 58% !important;
+
+        max-width: 58% !important;
+
+        text-align: right !important;
       }
 
     }
@@ -1505,7 +1719,6 @@ function renderRecords(
 
           const evidenceHTML =
             hasEvidence
-
               ? `
                 <button
                   type="button"
@@ -1522,7 +1735,6 @@ function renderRecords(
                   ${evidenceName}
                 </div>
               `
-
               : `
                 <span
                   class="empty-evidence"
@@ -1627,6 +1839,7 @@ function ensureEvidenceViewer() {
         overscroll-behavior: none;
       }
 
+
       .evidence-viewer-backdrop {
         position: fixed;
 
@@ -1649,9 +1862,11 @@ function ensureEvidenceViewer() {
           );
       }
 
+
       .evidence-viewer-backdrop.hidden {
         display: none;
       }
+
 
       .evidence-viewer-shell {
         display: flex;
@@ -1690,6 +1905,7 @@ function ensureEvidenceViewer() {
           );
       }
 
+
       .evidence-viewer-toolbar {
         flex-shrink: 0;
 
@@ -1712,9 +1928,11 @@ function ensureEvidenceViewer() {
           #ffffff;
       }
 
+
       .evidence-viewer-heading {
         min-width: 0;
       }
+
 
       .evidence-viewer-heading strong {
         display: block;
@@ -1723,6 +1941,7 @@ function ensureEvidenceViewer() {
 
         font-size: 1rem;
       }
+
 
       .evidence-viewer-file-name {
         display: block;
@@ -1741,6 +1960,7 @@ function ensureEvidenceViewer() {
         white-space:
           nowrap;
       }
+
 
       .evidence-viewer-close {
         flex-shrink: 0;
@@ -1763,6 +1983,7 @@ function ensureEvidenceViewer() {
         cursor: pointer;
       }
 
+
       .evidence-viewer-close:focus-visible {
         outline:
           3px
@@ -1776,6 +1997,7 @@ function ensureEvidenceViewer() {
 
         outline-offset: 2px;
       }
+
 
       .evidence-viewer-content {
         flex: 1;
@@ -1795,6 +2017,7 @@ function ensureEvidenceViewer() {
         -webkit-overflow-scrolling:
           touch;
       }
+
 
       .evidence-viewer-image {
         display: block;
@@ -1822,6 +2045,7 @@ function ensureEvidenceViewer() {
           );
       }
 
+
       .evidence-viewer-pdf {
         width: 100%;
         height: 100%;
@@ -1833,6 +2057,7 @@ function ensureEvidenceViewer() {
 
         background: #ffffff;
       }
+
 
       .evidence-viewer-message {
         width:
@@ -1856,11 +2081,13 @@ function ensureEvidenceViewer() {
         text-align: center;
       }
 
+
       @media (max-width: 600px) {
 
         .evidence-viewer-backdrop {
           padding: 0;
         }
+
 
         .evidence-viewer-shell {
           width: 100%;
@@ -1872,6 +2099,7 @@ function ensureEvidenceViewer() {
 
           border-radius: 0;
         }
+
 
         .evidence-viewer-toolbar {
           padding:
@@ -1899,6 +2127,7 @@ function ensureEvidenceViewer() {
             );
         }
 
+
         .evidence-viewer-content {
           padding:
             12px
@@ -1924,6 +2153,7 @@ function ensureEvidenceViewer() {
               )
             );
         }
+
 
         .evidence-viewer-pdf {
           min-height: 100%;
@@ -2781,11 +3011,11 @@ function printCurrentReport() {
 
   /*
     iPhone / iPad:
-    use actual compact print styling.
+    use compact print styling with safe
+    horizontal printable width.
 
     Android / desktop:
-    no compact class is applied, so the current
-    A4 style.css output remains unchanged.
+    no compact class is applied.
 
     No popup.
     No CSS zoom.
@@ -2795,8 +3025,8 @@ function printCurrentReport() {
   configureIOSPrintLayout();
 
   /*
-    Force Safari / WebKit to recalculate the
-    print-only CSS before opening print preview.
+    Force Safari / WebKit to recalculate
+    print-only CSS before preview.
   */
 
   void document
@@ -3056,13 +3286,11 @@ function setTodayDate() {
     new Date();
 
   const year =
-    now
-      .getFullYear();
+    now.getFullYear();
 
   const month =
     String(
-      now
-        .getMonth() +
+      now.getMonth() +
       1
     )
       .padStart(
@@ -3072,8 +3300,7 @@ function setTodayDate() {
 
   const day =
     String(
-      now
-        .getDate()
+      now.getDate()
     )
       .padStart(
         2,
@@ -3147,6 +3374,7 @@ window.addEventListener(
       Ensure iOS compact rules are active before
       Safari constructs the printable document.
     */
+
     configureIOSPrintLayout();
   }
 );
