@@ -59,7 +59,6 @@ const evidenceInput =
   );
 
 
-// Toast notification
 const toast =
   document.getElementById(
     "toast"
@@ -71,7 +70,6 @@ const toastMessage =
   );
 
 
-// Confirmation modal
 const confirmModal =
   document.getElementById(
     "confirmModal"
@@ -98,7 +96,6 @@ const confirmOk =
   );
 
 
-// Near-miss report modal
 const reportModal =
   document.getElementById(
     "reportModal"
@@ -198,23 +195,15 @@ let currentReportRecord =
 let currentReportEvidenceURL =
   null;
 
-
-// NEW:
-// Remember where focus was before
-// the report opened.
 let reportReturnFocusElement =
   null;
 
-
-// NEW:
-// Tracks whether View Report created
-// a temporary history entry.
 let reportHistoryActive =
   false;
 
 
 // ======================================================
-// HELPER
+// HELPERS
 // ======================================================
 
 function escapeHTML(
@@ -247,10 +236,6 @@ function escapeHTML(
 
 }
 
-
-// ======================================================
-// DATE HELPERS
-// ======================================================
 
 function formatRecordDate(
   value
@@ -322,9 +307,14 @@ function formatRecordDate(
     .toLocaleDateString(
       "en-GB",
       {
-        day: "2-digit",
-        month: "long",
-        year: "numeric"
+        day:
+          "2-digit",
+
+        month:
+          "long",
+
+        year:
+          "numeric"
       }
     );
 
@@ -365,20 +355,25 @@ function formatDateTime(
     .toLocaleString(
       "en-GB",
       {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
+        day:
+          "2-digit",
+
+        month:
+          "long",
+
+        year:
+          "numeric",
+
+        hour:
+          "2-digit",
+
+        minute:
+          "2-digit"
       }
     );
 
 }
 
-
-// ======================================================
-// REPORT NUMBER
-// ======================================================
 
 function generateReportNumber(
   record
@@ -423,10 +418,6 @@ function generateReportNumber(
 
 }
 
-
-// ======================================================
-// LIKELIHOOD / SEVERITY LABELS
-// ======================================================
 
 function getLikelihoodLabel(
   value
@@ -512,10 +503,6 @@ function getSeverityLabel(
 }
 
 
-// ======================================================
-// FILE HELPERS
-// ======================================================
-
 function isImageEvidence(
   record
 ) {
@@ -546,12 +533,10 @@ function isImageEvidence(
 
   const name =
     String(
-
       record.evidenceName ||
-
       ""
-
-    ).toLowerCase();
+    )
+      .toLowerCase();
 
 
   return (
@@ -600,12 +585,10 @@ function isPDFEvidence(
 
   const name =
     String(
-
       record.evidenceName ||
-
       ""
-
-    ).toLowerCase();
+    )
+      .toLowerCase();
 
 
   return (
@@ -613,62 +596,10 @@ function isPDFEvidence(
     type ===
       "application/pdf" ||
 
-    /\.pdf$/i.test(
-      name
-    )
-
-  );
-
-}
-
-
-function fileToDataURL(
-  file
-) {
-
-  return new Promise(
-
-    (
-      resolve,
-      reject
-    ) => {
-
-      const reader =
-        new FileReader();
-
-
-      reader.onload =
-        () => {
-
-          resolve(
-            reader.result
-          );
-
-        };
-
-
-      reader.onerror =
-        () => {
-
-          reject(
-
-            reader.error ||
-
-            new Error(
-              "Unable to read evidence file."
-            )
-
-          );
-
-        };
-
-
-      reader
-        .readAsDataURL(
-          file
-        );
-
-    }
+    /\.pdf$/i
+      .test(
+        name
+      )
 
   );
 
@@ -676,7 +607,7 @@ function fileToDataURL(
 
 
 // ======================================================
-// TOAST NOTIFICATION
+// TOAST
 // ======================================================
 
 function showToast(
@@ -703,8 +634,9 @@ function showToast(
       message;
 
 
-  toast.className =
-    `toast toast-${type}`;
+  toast
+    .className =
+      `toast toast-${type}`;
 
 
   clearTimeout(
@@ -755,11 +687,9 @@ function showConfirm(
       ) {
 
         resolve(
-
           window.confirm(
             message
           )
-
         );
 
         return;
@@ -768,8 +698,7 @@ function showConfirm(
 
 
       const previousFocus =
-        document
-          .activeElement;
+        document.activeElement;
 
 
       confirmTitle
@@ -795,16 +724,13 @@ function showConfirm(
 
 
       setTimeout(
-
         () => {
 
           confirmCancel
             .focus();
 
         },
-
         0
-
       );
 
 
@@ -1074,10 +1000,6 @@ function getRiskClass(
 }
 
 
-// ======================================================
-// RISK MATRIX
-// ======================================================
-
 function highlightRiskMatrix(
   likelihood,
   severity
@@ -1155,10 +1077,6 @@ function highlightRiskMatrix(
 
 }
 
-
-// ======================================================
-// RISK PREVIEW
-// ======================================================
 
 function updateRiskPreview() {
 
@@ -1309,14 +1227,6 @@ function validateEvidence(
   ];
 
 
-  const imageExtension =
-    /\.(jpg|jpeg|png|webp|gif|heic|heif)$/i;
-
-
-  const pdfExtension =
-    /\.pdf$/i;
-
-
   const isImage =
 
     allowedImageTypes
@@ -1324,7 +1234,7 @@ function validateEvidence(
         fileType
       ) ||
 
-    imageExtension
+    /\.(jpg|jpeg|png|webp|gif|heic|heif)$/i
       .test(
         fileName
       );
@@ -1335,7 +1245,7 @@ function validateEvidence(
     fileType ===
       "application/pdf" ||
 
-    pdfExtension
+    /\.pdf$/i
       .test(
         fileName
       );
@@ -1459,9 +1369,7 @@ if (
 
 
         const riskScore =
-
           likelihood *
-
           severity;
 
 
@@ -1632,6 +1540,7 @@ if (
 
           await loadDashboard();
 
+
         } catch (
           error
         ) {
@@ -1733,66 +1642,48 @@ async function loadDashboard() {
 
             const area =
               String(
-
                 record.area ??
-
                 ""
-
               )
                 .toLowerCase();
 
 
             const hazard =
               String(
-
                 record.hazard ??
-
                 ""
-
               )
                 .toLowerCase();
 
 
             const description =
               String(
-
                 record.description ??
-
                 ""
-
               )
                 .toLowerCase();
 
 
             const consequence =
               String(
-
                 record.consequence ??
-
                 ""
-
               )
                 .toLowerCase();
 
 
             const action =
               String(
-
                 record.action ??
-
                 ""
-
               )
                 .toLowerCase();
 
 
             const evidenceName =
               String(
-
                 record.evidenceName ??
-
                 ""
-
               )
                 .toLowerCase();
 
@@ -1801,29 +1692,35 @@ async function loadDashboard() {
 
               !searchTerm ||
 
-              area.includes(
-                searchTerm
-              ) ||
+              area
+                .includes(
+                  searchTerm
+                ) ||
 
-              hazard.includes(
-                searchTerm
-              ) ||
+              hazard
+                .includes(
+                  searchTerm
+                ) ||
 
-              description.includes(
-                searchTerm
-              ) ||
+              description
+                .includes(
+                  searchTerm
+                ) ||
 
-              consequence.includes(
-                searchTerm
-              ) ||
+              consequence
+                .includes(
+                  searchTerm
+                ) ||
 
-              action.includes(
-                searchTerm
-              ) ||
+              action
+                .includes(
+                  searchTerm
+                ) ||
 
-              evidenceName.includes(
-                searchTerm
-              );
+              evidenceName
+                .includes(
+                  searchTerm
+                );
 
 
             const matchesRisk =
@@ -1865,6 +1762,7 @@ async function loadDashboard() {
     updateStats(
       records
     );
+
 
   } catch (
     error
@@ -1920,9 +1818,7 @@ function renderRecords(
         <tr>
 
           <td colspan="8">
-
             No matching records found.
-
           </td>
 
         </tr>
@@ -2127,18 +2023,14 @@ function renderRecords(
                       ${riskClass}
                     "
                   >
-
                     ${riskLevel}
-
                   </span>
 
                 </td>
 
 
                 <td>
-
                   ${evidenceHTML}
-
                 </td>
 
 
@@ -2149,9 +2041,7 @@ function renderRecords(
                     class="report-button"
                     onclick="viewReport(${id})"
                   >
-
                     View Report
-
                   </button>
 
                 </td>
@@ -2164,9 +2054,7 @@ function renderRecords(
                     class="delete-button"
                     onclick="removeRecord(${id})"
                   >
-
                     Delete
-
                   </button>
 
                 </td>
@@ -2277,6 +2165,7 @@ function viewEvidence(
 
     );
 
+
   } catch (
     error
   ) {
@@ -2314,19 +2203,22 @@ window.viewEvidence =
 function clearReportEvidenceURL() {
 
   if (
-    currentReportEvidenceURL
+    !currentReportEvidenceURL
   ) {
 
-    URL
-      .revokeObjectURL(
-        currentReportEvidenceURL
-      );
-
-
-    currentReportEvidenceURL =
-      null;
+    return;
 
   }
+
+
+  URL
+    .revokeObjectURL(
+      currentReportEvidenceURL
+    );
+
+
+  currentReportEvidenceURL =
+    null;
 
 }
 
@@ -2617,10 +2509,6 @@ function viewReport(
   }
 
 
-  /*
-    Remember which button was focused
-    before opening the report.
-  */
   reportReturnFocusElement =
     document.activeElement;
 
@@ -2641,56 +2529,44 @@ function viewReport(
 
 
   /*
-    NEW MOBILE/PWA FIX
+    Add one temporary history entry.
 
-    Add one temporary browser history
-    entry while the report is open.
-
-    When the user presses Back on Android,
-    Safari or an installed PWA, this entry
-    can be removed and the report closes
-    instead of trapping the user.
+    Browser / PWA Back will close the
+    report instead of leaving the user
+    trapped inside the report screen.
   */
-  if (
-    !history.state ||
-    !history
-      .state
-      .penguinReportOpen
-  ) {
 
-    history
-      .pushState(
+  history
+    .pushState(
 
-        {
+      {
 
-          ...(
-            history.state ||
-            {}
-          ),
+        ...(
+          history.state ||
+          {}
+        ),
 
-          penguinReportOpen:
-            true,
+        penguinReportOpen:
+          true,
 
-          penguinReportId:
-            Number(
-              record.id
-            )
+        penguinReportId:
+          Number(
+            record.id
+          )
 
-        },
+      },
 
-        "",
+      "",
 
-        window
-          .location
-          .href
+      window
+        .location
+        .href
 
-      );
+    );
 
 
-    reportHistoryActive =
-      true;
-
-  }
+  reportHistoryActive =
+    true;
 
 
   setTimeout(
@@ -2714,7 +2590,7 @@ window.viewReport =
 
 
 // ======================================================
-// HIDE REPORT MODAL
+// HIDE / CLOSE REPORT
 // ======================================================
 
 function hideReportModal() {
@@ -2765,10 +2641,6 @@ function hideReportModal() {
   }
 
 
-  /*
-    Return keyboard focus to the button
-    that opened the report.
-  */
   if (
     reportReturnFocusElement &&
     typeof reportReturnFocusElement.focus ===
@@ -2787,21 +2659,8 @@ function hideReportModal() {
 }
 
 
-// ======================================================
-// CLOSE REPORT
-// ======================================================
-
 function closeReport() {
 
-  /*
-    NEW MOBILE/PWA FIX
-
-    If View Report created the temporary
-    history entry, go back one step.
-
-    The popstate listener below then calls
-    hideReportModal().
-  */
   if (
     reportHistoryActive &&
     history.state &&
@@ -2812,6 +2671,35 @@ function closeReport() {
 
     history
       .back();
+
+
+    /*
+      Fallback for unusual mobile/PWA
+      behaviour where popstate is delayed.
+    */
+
+    setTimeout(
+
+      () => {
+
+        if (
+          reportModal &&
+          !reportModal
+            .classList
+            .contains(
+              "hidden"
+            )
+        ) {
+
+          hideReportModal();
+
+        }
+
+      },
+
+      350
+
+    );
 
 
     return;
@@ -2828,7 +2716,7 @@ function closeReport() {
 // PRINT / SAVE REPORT AS PDF
 // ======================================================
 
-async function printCurrentReport() {
+function printCurrentReport() {
 
   if (
     !currentReportRecord
@@ -2848,33 +2736,18 @@ async function printCurrentReport() {
   }
 
 
-  const record =
-    currentReportRecord;
-
-
-  /*
-    Open the print window immediately.
-
-    This reduces the chance that the browser
-    treats the window as a blocked popup.
-  */
-  const printWindow =
-    window.open(
-
-      "",
-
-      "_blank"
-
-    );
-
-
   if (
-    !printWindow
+    !reportModal ||
+    reportModal
+      .classList
+      .contains(
+        "hidden"
+      )
   ) {
 
     showToast(
 
-      "Please allow pop-ups to print or save the report.",
+      "Please open a report before printing.",
 
       "error"
 
@@ -2886,1696 +2759,26 @@ async function printCurrentReport() {
   }
 
 
-  printWindow
-    .document
-    .write(`
+  /*
+    IMPORTANT MOBILE / PWA FIX
 
-      <!DOCTYPE html>
+    DO NOT open a new window.
 
-      <html lang="en">
+    Print the current app page.
 
-      <head>
+    style.css @media print will hide:
+    - dashboard
+    - toolbar
+    - buttons
 
-        <meta charset="UTF-8">
+    and print only the Near-Miss Report.
 
-        <title>
-          Preparing Near-Miss Report...
-        </title>
+    After Print / Save PDF finishes,
+    the user remains in this same app
+    and can press ← Back.
+  */
 
-      </head>
-
-      <body>
-
-        <p
-          style="
-            font-family:
-              Arial,
-              sans-serif;
-
-            padding:
-              20px;
-          "
-        >
-
-          Preparing report...
-
-        </p>
-
-      </body>
-
-      </html>
-
-    `);
-
-
-  printWindow
-    .document
-    .close();
-
-
-  let evidenceMarkup = `
-
-    <div
-      class="evidence-empty"
-    >
-
-      No supporting evidence attached.
-
-    </div>
-
-  `;
-
-
-  if (
-    record.evidenceFile
-  ) {
-
-    if (
-      isImageEvidence(
-        record
-      )
-    ) {
-
-      try {
-
-        const dataURL =
-          await fileToDataURL(
-            record.evidenceFile
-          );
-
-
-        evidenceMarkup = `
-
-          <div
-            class="evidence-file"
-          >
-
-            <strong>
-
-              ${escapeHTML(
-
-                record.evidenceName ||
-
-                "Image evidence"
-
-              )}
-
-            </strong>
-
-          </div>
-
-
-          <img
-
-            class="
-              evidence-image
-            "
-
-            src="
-              ${dataURL}
-            "
-
-            alt="
-              Supporting evidence
-            "
-
-          >
-
-        `;
-
-
-      } catch (
-        error
-      ) {
-
-        console.error(
-
-          "Unable to prepare image for report:",
-
-          error
-
-        );
-
-
-        evidenceMarkup = `
-
-          <div
-            class="evidence-file"
-          >
-
-            Evidence attached:
-
-            <strong>
-
-              ${escapeHTML(
-
-                record.evidenceName ||
-
-                "Image evidence"
-
-              )}
-
-            </strong>
-
-          </div>
-
-        `;
-
-      }
-
-
-    } else if (
-      isPDFEvidence(
-        record
-      )
-    ) {
-
-      evidenceMarkup = `
-
-        <div
-          class="pdf-evidence"
-        >
-
-          <strong>
-
-            PDF Attachment
-
-          </strong>
-
-
-          <div>
-
-            ${escapeHTML(
-
-              record.evidenceName ||
-
-              "Attached PDF"
-
-            )}
-
-          </div>
-
-
-          <p>
-
-            The original PDF evidence is stored
-            with this near-miss record.
-
-          </p>
-
-        </div>
-
-      `;
-
-    }
-
-  }
-
-
-  const riskLevel =
-    String(
-
-      record.riskLevel ||
-
-      "-"
-
-    );
-
-
-  let riskBackground =
-    "#e5e7eb";
-
-
-  let riskColor =
-    "#111827";
-
-
-  if (
-    riskLevel ===
-    "Low"
-  ) {
-
-    riskBackground =
-      "#dcfce7";
-
-
-    riskColor =
-      "#166534";
-
-
-  } else if (
-    riskLevel ===
-    "Medium"
-  ) {
-
-    riskBackground =
-      "#fef3c7";
-
-
-    riskColor =
-      "#92400e";
-
-
-  } else if (
-    riskLevel ===
-    "High"
-  ) {
-
-    riskBackground =
-      "#fed7aa";
-
-
-    riskColor =
-      "#9a3412";
-
-
-  } else if (
-    riskLevel ===
-    "Critical"
-  ) {
-
-    riskBackground =
-      "#fee2e2";
-
-
-    riskColor =
-      "#991b1b";
-
-  }
-
-
-  const reportHTML = `
-
-    <!DOCTYPE html>
-
-    <html lang="en">
-
-    <head>
-
-      <meta
-        charset="UTF-8"
-      >
-
-
-      <meta
-        name="viewport"
-        content="
-          width=device-width,
-          initial-scale=1.0
-        "
-      >
-
-
-      <title>
-
-        ${escapeHTML(
-          generateReportNumber(
-            record
-          )
-        )}
-
-        -
-
-        Near-Miss Report
-
-      </title>
-
-
-      <style>
-
-        @page {
-
-          size:
-            A4;
-
-          margin:
-            12mm;
-
-        }
-
-
-        * {
-
-          box-sizing:
-            border-box;
-
-        }
-
-
-        body {
-
-          margin:
-            0;
-
-
-          font-family:
-            Arial,
-            Helvetica,
-            sans-serif;
-
-
-          font-size:
-            11pt;
-
-
-          line-height:
-            1.45;
-
-
-          background:
-            #ffffff;
-
-
-          color:
-            #111827;
-
-        }
-
-
-        .report {
-
-          width:
-            100%;
-
-
-          max-width:
-            190mm;
-
-
-          margin:
-            0 auto;
-
-        }
-
-
-        .header {
-
-          display:
-            flex;
-
-
-          justify-content:
-            space-between;
-
-
-          align-items:
-            flex-start;
-
-
-          gap:
-            20px;
-
-
-          padding-bottom:
-            18px;
-
-
-          border-bottom:
-            3px solid
-            #6d5dfc;
-
-        }
-
-
-        .brand {
-
-          display:
-            flex;
-
-
-          align-items:
-            center;
-
-
-          gap:
-            12px;
-
-        }
-
-
-        .brand-mark {
-
-          display:
-            flex;
-
-
-          align-items:
-            center;
-
-
-          justify-content:
-            center;
-
-
-          width:
-            44px;
-
-
-          height:
-            44px;
-
-
-          border-radius:
-            10px;
-
-
-          background:
-            #6d5dfc;
-
-
-          color:
-            #ffffff;
-
-
-          font-size:
-            15pt;
-
-
-          font-weight:
-            800;
-
-        }
-
-
-        .brand h1 {
-
-          margin:
-            0;
-
-
-          font-size:
-            17pt;
-
-        }
-
-
-        .brand p {
-
-          margin:
-            2px 0 0;
-
-
-          color:
-            #6b7280;
-
-
-          font-size:
-            9.5pt;
-
-        }
-
-
-        .document-title {
-
-          text-align:
-            right;
-
-        }
-
-
-        .document-title span {
-
-          display:
-            block;
-
-
-          color:
-            #6b7280;
-
-
-          font-size:
-            8.5pt;
-
-
-          font-weight:
-            700;
-
-
-          letter-spacing:
-            1px;
-
-        }
-
-
-        .document-title h2 {
-
-          margin:
-            4px 0 0;
-
-
-          font-size:
-            16pt;
-
-        }
-
-
-        .reference {
-
-          display:
-            grid;
-
-
-          grid-template-columns:
-            repeat(
-              2,
-              minmax(
-                0,
-                1fr
-              )
-            );
-
-
-          gap:
-            12px;
-
-
-          margin-top:
-            18px;
-
-
-          padding:
-            13px;
-
-
-          background:
-            #f8fafc;
-
-
-          border:
-            1px solid
-            #e5e7eb;
-
-
-          border-radius:
-            8px;
-
-        }
-
-
-        .section {
-
-          margin-top:
-            18px;
-
-
-          break-inside:
-            avoid;
-
-        }
-
-
-        .section h3 {
-
-          margin:
-            0 0 10px;
-
-
-          padding-bottom:
-            6px;
-
-
-          border-bottom:
-            1px solid
-            #d1d5db;
-
-
-          font-size:
-            11pt;
-
-        }
-
-
-        .info-grid {
-
-          display:
-            grid;
-
-
-          grid-template-columns:
-            repeat(
-              2,
-              minmax(
-                0,
-                1fr
-              )
-            );
-
-
-          gap:
-            10px;
-
-        }
-
-
-        .risk-grid {
-
-          display:
-            grid;
-
-
-          grid-template-columns:
-            repeat(
-              4,
-              minmax(
-                0,
-                1fr
-              )
-            );
-
-
-          gap:
-            8px;
-
-        }
-
-
-        .info-item,
-        .risk-item {
-
-          padding:
-            10px;
-
-
-          background:
-            #f9fafb;
-
-
-          border:
-            1px solid
-            #e5e7eb;
-
-
-          border-radius:
-            7px;
-
-        }
-
-
-        .label {
-
-          display:
-            block;
-
-
-          margin-bottom:
-            4px;
-
-
-          color:
-            #6b7280;
-
-
-          font-size:
-            8.5pt;
-
-
-          font-weight:
-            700;
-
-
-          text-transform:
-            uppercase;
-
-        }
-
-
-        .text-box {
-
-          min-height:
-            55px;
-
-
-          padding:
-            11px;
-
-
-          background:
-            #ffffff;
-
-
-          border:
-            1px solid
-            #d1d5db;
-
-
-          border-radius:
-            7px;
-
-
-          white-space:
-            pre-wrap;
-
-
-          overflow-wrap:
-            anywhere;
-
-        }
-
-
-        .risk-badge {
-
-          display:
-            inline-block;
-
-
-          padding:
-            4px 8px;
-
-
-          border-radius:
-            999px;
-
-
-          background:
-            ${riskBackground};
-
-
-          color:
-            ${riskColor};
-
-
-          font-size:
-            9pt;
-
-
-          font-weight:
-            700;
-
-        }
-
-
-        .evidence-box {
-
-          padding:
-            11px;
-
-
-          border:
-            1px solid
-            #d1d5db;
-
-
-          border-radius:
-            7px;
-
-        }
-
-
-        .evidence-file {
-
-          margin-bottom:
-            10px;
-
-
-          color:
-            #374151;
-
-        }
-
-
-        .evidence-image {
-
-          display:
-            block;
-
-
-          width:
-            auto;
-
-
-          max-width:
-            100%;
-
-
-          max-height:
-            115mm;
-
-
-          margin:
-            10px auto 0;
-
-
-          object-fit:
-            contain;
-
-
-          border-radius:
-            6px;
-
-
-          border:
-            1px solid
-            #e5e7eb;
-
-        }
-
-
-        .pdf-evidence {
-
-          padding:
-            12px;
-
-
-          background:
-            #f9fafb;
-
-
-          border-radius:
-            7px;
-
-        }
-
-
-        .pdf-evidence p {
-
-          margin:
-            7px 0 0;
-
-
-          color:
-            #6b7280;
-
-
-          font-size:
-            9pt;
-
-        }
-
-
-        .evidence-empty {
-
-          color:
-            #6b7280;
-
-        }
-
-
-        .record-info {
-
-          padding:
-            10px;
-
-
-          background:
-            #f9fafb;
-
-
-          border:
-            1px solid
-            #e5e7eb;
-
-
-          border-radius:
-            7px;
-
-        }
-
-
-        .footer {
-
-          display:
-            flex;
-
-
-          justify-content:
-            space-between;
-
-
-          gap:
-            20px;
-
-
-          margin-top:
-            24px;
-
-
-          padding-top:
-            12px;
-
-
-          border-top:
-            1px solid
-            #d1d5db;
-
-
-          color:
-            #6b7280;
-
-
-          font-size:
-            8pt;
-
-        }
-
-
-        .footer strong {
-
-          display:
-            block;
-
-
-          color:
-            #374151;
-
-        }
-
-
-        @media print {
-
-          body {
-
-            print-color-adjust:
-              exact;
-
-
-            -webkit-print-color-adjust:
-              exact;
-
-          }
-
-        }
-
-
-        @media (
-          max-width:
-            700px
-        ) {
-
-          .header {
-
-            display:
-              block;
-
-          }
-
-
-          .document-title {
-
-            margin-top:
-              15px;
-
-
-            text-align:
-              left;
-
-          }
-
-
-          .risk-grid {
-
-            grid-template-columns:
-              repeat(
-                2,
-                minmax(
-                  0,
-                  1fr
-                )
-              );
-
-          }
-
-        }
-
-      </style>
-
-    </head>
-
-
-    <body>
-
-      <article
-        class="report"
-      >
-
-
-        <header
-          class="header"
-        >
-
-
-          <div
-            class="brand"
-          >
-
-
-            <div
-              class="
-                brand-mark
-              "
-            >
-
-              PL
-
-            </div>
-
-
-            <div>
-
-
-              <h1>
-
-                PenguinLogic HSE
-
-              </h1>
-
-
-              <p>
-
-                Health, Safety & Environment
-
-              </p>
-
-
-            </div>
-
-
-          </div>
-
-
-          <div
-            class="
-              document-title
-            "
-          >
-
-
-            <span>
-
-              HSE RECORD
-
-            </span>
-
-
-            <h2>
-
-              NEAR-MISS REPORT
-
-            </h2>
-
-
-          </div>
-
-
-        </header>
-
-
-        <div
-          class="
-            reference
-          "
-        >
-
-
-          <div>
-
-
-            <span
-              class="
-                label
-              "
-            >
-
-              Report No.
-
-            </span>
-
-
-            <strong>
-
-              ${escapeHTML(
-                generateReportNumber(
-                  record
-                )
-              )}
-
-            </strong>
-
-
-          </div>
-
-
-          <div>
-
-
-            <span
-              class="
-                label
-              "
-            >
-
-              Event Type
-
-            </span>
-
-
-            <strong>
-
-              Near Miss
-
-            </strong>
-
-
-          </div>
-
-
-        </div>
-
-
-        <section
-          class="
-            section
-          "
-        >
-
-
-          <h3>
-
-            1. Report Information
-
-          </h3>
-
-
-          <div
-            class="
-              info-grid
-            "
-          >
-
-
-            <div
-              class="
-                info-item
-              "
-            >
-
-
-              <span
-                class="
-                  label
-                "
-              >
-
-                Date
-
-              </span>
-
-
-              <strong>
-
-                ${escapeHTML(
-                  formatRecordDate(
-                    record.date
-                  )
-                )}
-
-              </strong>
-
-
-            </div>
-
-
-            <div
-              class="
-                info-item
-              "
-            >
-
-
-              <span
-                class="
-                  label
-                "
-              >
-
-                Area
-
-              </span>
-
-
-              <strong>
-
-                ${escapeHTML(
-
-                  record.area ||
-
-                  "-"
-
-                )}
-
-              </strong>
-
-
-            </div>
-
-
-            <div
-              class="
-                info-item
-              "
-            >
-
-
-              <span
-                class="
-                  label
-                "
-              >
-
-                Hazard Category
-
-              </span>
-
-
-              <strong>
-
-                ${escapeHTML(
-
-                  record.hazard ||
-
-                  "-"
-
-                )}
-
-              </strong>
-
-
-            </div>
-
-
-          </div>
-
-
-        </section>
-
-
-        <section
-          class="
-            section
-          "
-        >
-
-
-          <h3>
-
-            2. Risk Assessment
-
-          </h3>
-
-
-          <div
-            class="
-              risk-grid
-            "
-          >
-
-
-            <div
-              class="
-                risk-item
-              "
-            >
-
-
-              <span
-                class="
-                  label
-                "
-              >
-
-                Likelihood
-
-              </span>
-
-
-              <strong>
-
-                ${escapeHTML(
-                  getLikelihoodLabel(
-                    record.likelihood
-                  )
-                )}
-
-              </strong>
-
-
-            </div>
-
-
-            <div
-              class="
-                risk-item
-              "
-            >
-
-
-              <span
-                class="
-                  label
-                "
-              >
-
-                Severity
-
-              </span>
-
-
-              <strong>
-
-                ${escapeHTML(
-                  getSeverityLabel(
-                    record.severity
-                  )
-                )}
-
-              </strong>
-
-
-            </div>
-
-
-            <div
-              class="
-                risk-item
-              "
-            >
-
-
-              <span
-                class="
-                  label
-                "
-              >
-
-                Risk Score
-
-              </span>
-
-
-              <strong>
-
-                ${escapeHTML(
-
-                  record.riskScore ??
-
-                  "-"
-
-                )}
-
-              </strong>
-
-
-            </div>
-
-
-            <div
-              class="
-                risk-item
-              "
-            >
-
-
-              <span
-                class="
-                  label
-                "
-              >
-
-                Risk Level
-
-              </span>
-
-
-              <span
-                class="
-                  risk-badge
-                "
-              >
-
-                ${escapeHTML(
-
-                  record.riskLevel ||
-
-                  "-"
-
-                )}
-
-              </span>
-
-
-            </div>
-
-
-          </div>
-
-
-        </section>
-
-
-        <section
-          class="
-            section
-          "
-        >
-
-
-          <h3>
-
-            3. Near-Miss Description
-
-          </h3>
-
-
-          <div
-            class="
-              text-box
-            "
-          >${escapeHTML(
-
-            record.description ||
-
-            "Not recorded."
-
-          )}</div>
-
-
-        </section>
-
-
-        <section
-          class="
-            section
-          "
-        >
-
-
-          <h3>
-
-            4. Potential Consequence
-
-          </h3>
-
-
-          <div
-            class="
-              text-box
-            "
-          >${escapeHTML(
-
-            record.consequence ||
-
-            "Not recorded."
-
-          )}</div>
-
-
-        </section>
-
-
-        <section
-          class="
-            section
-          "
-        >
-
-
-          <h3>
-
-            5. Immediate Action Taken
-
-          </h3>
-
-
-          <div
-            class="
-              text-box
-            "
-          >${escapeHTML(
-
-            record.action ||
-
-            "No immediate action recorded."
-
-          )}</div>
-
-
-        </section>
-
-
-        <section
-          class="
-            section
-          "
-        >
-
-
-          <h3>
-
-            6. Supporting Evidence
-
-          </h3>
-
-
-          <div
-            class="
-              evidence-box
-            "
-          >
-
-            ${evidenceMarkup}
-
-          </div>
-
-
-        </section>
-
-
-        <section
-          class="
-            section
-          "
-        >
-
-
-          <h3>
-
-            7. Record Information
-
-          </h3>
-
-
-          <div
-            class="
-              record-info
-            "
-          >
-
-
-            <span
-              class="
-                label
-              "
-            >
-
-              Record Created
-
-            </span>
-
-
-            <strong>
-
-              ${escapeHTML(
-                formatDateTime(
-                  record.createdAt
-                )
-              )}
-
-            </strong>
-
-
-          </div>
-
-
-        </section>
-
-
-        <footer
-          class="
-            footer
-          "
-        >
-
-
-          <div>
-
-
-            <strong>
-
-              PenguinLogic HSE
-
-            </strong>
-
-
-            Near-Miss & Risk Dashboard
-
-
-          </div>
-
-
-          <div>
-
-            This report was generated from a
-            locally stored HSE record.
-
-          </div>
-
-
-        </footer>
-
-
-      </article>
-
-
-    </body>
-
-
-    </html>
-
-  `;
-
-
-  printWindow
-    .document
-    .open();
-
-
-  printWindow
-    .document
-    .write(
-      reportHTML
-    );
-
-
-  printWindow
-    .document
-    .close();
-
-
-  printWindow
-    .focus();
-
-
-  setTimeout(
-
-    () => {
-
-      printWindow
-        .print();
-
-    },
-
-    500
-
-  );
+  window.print();
 
 }
 
@@ -4657,8 +2860,7 @@ function updateStats(
 
   const averageRisk =
 
-    records.length >
-    0
+    records.length
 
       ? (
 
@@ -4965,10 +3167,8 @@ function setTodayDate() {
 
   const day =
     String(
-
       now
         .getDate()
-
     )
       .padStart(
         2,
@@ -5037,7 +3237,8 @@ areaFilter
   );
 
 
-// Report Back / Close button
+// Report Back button
+
 reportClose
   ?.addEventListener(
 
@@ -5048,7 +3249,8 @@ reportClose
   );
 
 
-// Print / Save PDF button
+// Print / Save PDF
+
 reportPrint
   ?.addEventListener(
 
@@ -5059,7 +3261,54 @@ reportPrint
   );
 
 
+// ======================================================
+// AFTER PRINT
+// ======================================================
+
+window
+  .addEventListener(
+
+    "afterprint",
+
+    () => {
+
+      /*
+        When the Print / Save PDF dialog
+        closes, keep the report open and
+        restore focus to ← Back.
+      */
+
+      if (
+        reportModal &&
+        !reportModal
+          .classList
+          .contains(
+            "hidden"
+          )
+      ) {
+
+        setTimeout(
+
+          () => {
+
+            reportClose
+              ?.focus();
+
+          },
+
+          0
+
+        );
+
+      }
+
+    }
+
+  );
+
+
 // Click backdrop to close report
+
 reportModal
   ?.addEventListener(
 
@@ -5081,7 +3330,8 @@ reportModal
   );
 
 
-// Desktop Escape key
+// Desktop Escape
+
 document
   .addEventListener(
 
@@ -5122,11 +3372,6 @@ window
 
     () => {
 
-      /*
-        If a report is currently displayed,
-        a browser/PWA Back event closes
-        the report instead of leaving it stuck.
-      */
       if (
         reportModal &&
 
@@ -5147,6 +3392,7 @@ window
 
 
 // Online status
+
 window
   .addEventListener(
 
@@ -5158,6 +3404,7 @@ window
 
 
 // Offline status
+
 window
   .addEventListener(
 
@@ -5170,7 +3417,6 @@ window
 
 // ======================================================
 // SERVICE WORKER
-// OFFLINE PWA SUPPORT
 // ======================================================
 
 if (
@@ -5195,10 +3441,6 @@ if (
               );
 
 
-          /*
-            Ask browser to check whether
-            a newer Service Worker exists.
-          */
           await registration
             .update();
 
@@ -5244,12 +3486,6 @@ document
 
     async () => {
 
-      /*
-        NEW:
-        Change old Close label to a clearer
-        Back button for iPhone, Android
-        and installed PWA.
-      */
       if (
         reportClose
       ) {
