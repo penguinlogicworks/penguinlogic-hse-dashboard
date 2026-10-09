@@ -3,7 +3,6 @@
    style.css
    ====================================================== */
 
-
 /* ======================================================
    GLOBAL
    ====================================================== */
@@ -14,9 +13,7 @@
 
 html {
   min-height: 100%;
-
   scroll-behavior: smooth;
-
   background: #f6f7fb;
 }
 
@@ -41,7 +38,6 @@ body {
 
 body.report-open {
   overflow: hidden;
-
   overscroll-behavior: none;
 }
 
@@ -71,13 +67,11 @@ body.report-open {
 
 .app-header h1 {
   margin: 0;
-
   font-size: 1.5rem;
 }
 
 .app-header p {
   margin: 4px 0 0;
-
   color: #6b7280;
 }
 
@@ -161,13 +155,11 @@ body.report-open {
 
 .stat-card span {
   color: #6b7280;
-
   font-size: 0.9rem;
 }
 
 .stat-card strong {
   overflow-wrap: anywhere;
-
   font-size: 1.8rem;
 }
 
@@ -255,7 +247,6 @@ textarea::placeholder {
 
 textarea {
   resize: vertical;
-
   min-height: 90px;
 }
 
@@ -266,7 +257,6 @@ textarea {
 
 input[type="file"] {
   padding: 9px;
-
   cursor: pointer;
 }
 
@@ -430,7 +420,6 @@ input[type="file"]::file-selector-button:hover {
 
 .section-header p {
   margin: 0;
-
   color: #6b7280;
 }
 
@@ -533,7 +522,6 @@ tbody tr:last-child td {
 
 .evidence-button:hover {
   background: #ede9fe;
-
   border-color: #a78bfa;
 }
 
@@ -561,7 +549,6 @@ tbody tr:last-child td {
   font-size: 0.75rem;
 
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
@@ -1167,7 +1154,6 @@ tbody tr:last-child td {
   background: transparent;
 }
 
-
 .report-brand-logo {
   display: block;
 
@@ -1430,6 +1416,7 @@ tbody tr:last-child td {
   display: block;
 
   width: auto;
+
   max-width: 100%;
   max-height: 440px;
 
@@ -1539,7 +1526,6 @@ tbody tr:last-child td {
       repeat(2, minmax(0, 1fr));
   }
 
-
   .report-risk-grid {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
@@ -1558,11 +1544,9 @@ tbody tr:last-child td {
     grid-template-columns: 1fr;
   }
 
-
   .report-header {
     flex-direction: column;
   }
-
 
   .report-document-title {
     text-align: left;
@@ -1594,7 +1578,6 @@ tbody tr:last-child td {
       );
   }
 
-
   .app-header {
     padding:
       calc(
@@ -1612,45 +1595,35 @@ tbody tr:last-child td {
       );
   }
 
-
   .app-header h1 {
     font-size: 1.25rem;
   }
-
 
   .app-header p {
     font-size: 0.85rem;
   }
 
-
   .status-badge {
     padding: 6px 9px;
-
     font-size: 0.75rem;
   }
-
 
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
 
-
   .form-grid {
     grid-template-columns: 1fr;
   }
 
-
   .card {
     padding: 16px;
-
     border-radius: 12px;
   }
-
 
   .risk-preview {
     align-items: flex-start;
   }
-
 
   .matrix-legend {
     gap: 8px;
@@ -1690,7 +1663,6 @@ tbody tr:last-child td {
       column-reverse;
   }
 
-
   .secondary-button,
   .danger-button {
     width: 100%;
@@ -1702,7 +1674,6 @@ tbody tr:last-child td {
   .report-modal-backdrop {
     padding: 0;
   }
-
 
   .report-modal-shell {
     width: 100%;
@@ -1727,6 +1698,7 @@ tbody tr:last-child td {
 
   .report-toolbar {
     flex-direction: column;
+
     align-items: stretch;
 
     gap: 10px;
@@ -1747,7 +1719,6 @@ tbody tr:last-child td {
       );
   }
 
-
   .report-toolbar-actions {
     display: grid;
 
@@ -1763,14 +1734,12 @@ tbody tr:last-child td {
     width: 100%;
   }
 
-
   .report-toolbar-actions .secondary-button,
   .report-print-button {
     width: 100%;
 
     min-height: 44px;
   }
-
 
   .near-miss-report {
     width: 100%;
@@ -1797,44 +1766,36 @@ tbody tr:last-child td {
     box-shadow: none;
   }
 
-
   .report-header {
     gap: 14px;
 
     padding-bottom: 16px;
   }
 
-
   .report-brand-mark {
     width: 42px;
     height: 42px;
   }
 
-
   .report-brand h1 {
     font-size: 1.15rem;
   }
-
 
   .report-document-title h2 {
     font-size: 1.15rem;
   }
 
-
   .report-reference {
     grid-template-columns: 1fr;
   }
-
 
   .report-info-grid {
     grid-template-columns: 1fr;
   }
 
-
   .report-info-wide {
     grid-column: auto;
   }
-
 
   .report-risk-grid {
     grid-template-columns:
@@ -1847,14 +1808,13 @@ tbody tr:last-child td {
       );
   }
 
-
   .report-footer {
     flex-direction: column;
+
     align-items: flex-start;
 
     gap: 8px;
   }
-
 
   .report-footer > div:last-child {
     max-width: none;
@@ -1875,21 +1835,17 @@ tbody tr:last-child td {
     align-items: flex-start;
   }
 
-
   .app-header h1 {
     font-size: 1.15rem;
   }
-
 
   .status-badge {
     margin-top: 2px;
   }
 
-
   .report-risk-grid {
     grid-template-columns: 1fr;
   }
-
 
   .report-toolbar-actions {
     grid-template-columns: 1fr;
@@ -1900,8 +1856,7 @@ tbody tr:last-child td {
 
 /* ======================================================
    PRINT SUPPORT
-   This is secondary protection.
-   app.js normally creates a dedicated A4 print window.
+   Prints the currently open report using window.print().
    ====================================================== */
 
 @media print {
@@ -1909,8 +1864,10 @@ tbody tr:last-child td {
   @page {
     size: A4;
     margin: 12mm;
+  }
 
-      /* ==================================================
+
+  /* ==================================================
      FIX REPORT LOGO SIZE IN WEB PRINT / PDF
      ================================================== */
 
@@ -1948,7 +1905,6 @@ tbody tr:last-child td {
 
     border-radius: 3mm !important;
   }
-  }
 
 
   body {
@@ -1959,14 +1915,12 @@ tbody tr:last-child td {
   }
 
 
-  body.report-open
-  > *:not(#reportModal) {
+  body.report-open > *:not(#reportModal) {
     display: none !important;
   }
 
 
-  body.report-open
-  #reportModal {
+  body.report-open #reportModal {
     position: static;
 
     display: block;
@@ -1976,13 +1930,11 @@ tbody tr:last-child td {
     background: none;
 
     opacity: 1;
-
     visibility: visible;
   }
 
 
-  body.report-open
-  .report-modal-shell {
+  body.report-open .report-modal-shell {
     display: block;
 
     width: 100%;
@@ -1999,14 +1951,12 @@ tbody tr:last-child td {
   }
 
 
-  body.report-open
-  .report-toolbar {
+  body.report-open .report-toolbar {
     display: none;
   }
 
 
-  body.report-open
-  .near-miss-report {
+  body.report-open .near-miss-report {
     width: 100%;
     max-width: none;
 
@@ -2043,7 +1993,6 @@ tbody tr:last-child td {
   html {
     scroll-behavior: auto;
   }
-
 
   *,
   *::before,
