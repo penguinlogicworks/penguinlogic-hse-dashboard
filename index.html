@@ -4,37 +4,49 @@
 
 <head>
 
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
 
   <meta
     name="theme-color"
     content="#6d5dfc"
-  />
-
-  <meta
-    name="apple-mobile-web-app-capable"
-    content="yes"
-  />
-
-  <meta
-    name="apple-mobile-web-app-status-bar-style"
-    content="default"
-  />
-
-  <meta
-    name="apple-mobile-web-app-title"
-    content="PenguinHSE"
-  />
+  >
 
   <meta
     name="description"
     content="Offline-first HSE near-miss reporting and risk assessment dashboard."
-  />
+  >
+
+  <meta
+    name="application-name"
+    content="PenguinLogic HSE"
+  >
+
+  <!-- Android / PWA -->
+  <meta
+    name="mobile-web-app-capable"
+    content="yes"
+  >
+
+  <!-- iOS PWA -->
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="default"
+  >
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="PenguinHSE"
+  >
 
 
   <title>
@@ -42,20 +54,39 @@
   </title>
 
 
+  <!-- PWA Manifest -->
   <link
     rel="manifest"
-    href="manifest.json"
-  />
+    href="./manifest.json"
+  >
+
+
+  <!-- App Icons -->
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="192x192"
+    href="./icons/icon-192.png"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="512x512"
+    href="./icons/icon-512.png"
+  >
 
   <link
     rel="apple-touch-icon"
-    href="icons/icon-192.png"
-  />
+    href="./icons/icon-192.png"
+  >
 
+
+  <!-- Styles -->
   <link
     rel="stylesheet"
-    href="style.css"
-  />
+    href="./style.css"
+  >
 
 </head>
 
@@ -63,9 +94,9 @@
 <body>
 
 
-  <!-- =========================================
+  <!-- ==================================================
        APP HEADER
-  ========================================== -->
+  =================================================== -->
 
   <header class="app-header">
 
@@ -76,7 +107,7 @@
       </h1>
 
       <p>
-        Near-Miss & Risk Dashboard
+        Near-Miss &amp; Risk Dashboard
       </p>
 
     </div>
@@ -94,16 +125,16 @@
 
 
 
-  <!-- =========================================
+  <!-- ==================================================
        MAIN CONTENT
-  ========================================== -->
+  =================================================== -->
 
   <main class="container">
 
 
-    <!-- =========================================
+    <!-- ==================================================
          DASHBOARD STATISTICS
-    ========================================== -->
+    =================================================== -->
 
     <section class="dashboard-grid">
 
@@ -164,9 +195,9 @@
 
 
 
-    <!-- =========================================
+    <!-- ==================================================
          5 × 5 RISK MATRIX
-    ========================================== -->
+    =================================================== -->
 
     <section class="card">
 
@@ -446,13 +477,14 @@
 
       </div>
 
+
     </section>
 
 
 
-    <!-- =========================================
+    <!-- ==================================================
          NEAR-MISS FORM
-    ========================================== -->
+    =================================================== -->
 
     <section class="card">
 
@@ -479,7 +511,7 @@
               type="date"
               id="date"
               required
-            />
+            >
 
           </div>
 
@@ -807,11 +839,13 @@
 
           </label>
 
+
           <input
             type="file"
             id="evidence"
             accept="image/*,application/pdf"
-          />
+          >
+
 
           <small
             style="
@@ -844,9 +878,9 @@
 
 
 
-    <!-- =========================================
+    <!-- ==================================================
          RECORDS
-    ========================================== -->
+    =================================================== -->
 
     <section class="card">
 
@@ -879,7 +913,7 @@
           id="searchInput"
           placeholder="Search area, hazard, description..."
           aria-label="Search near-miss records"
-        />
+        >
 
 
         <select
@@ -1033,9 +1067,9 @@
 
 
 
-  <!-- =========================================
+  <!-- ==================================================
        NEAR-MISS REPORT VIEWER
-  ========================================== -->
+  =================================================== -->
 
   <div
     id="reportModal"
@@ -1052,6 +1086,7 @@
 
       <div class="report-toolbar">
 
+
         <div>
 
           <strong id="reportModalTitle">
@@ -1067,13 +1102,23 @@
 
         <div class="report-toolbar-actions">
 
+
+          <!--
+            Back button is intentionally provided
+            inside the report viewer so installed
+            iOS / Android PWAs are not dependent
+            on browser navigation controls.
+          -->
+
           <button
             type="button"
             id="reportClose"
             class="secondary-button"
+            aria-label="Back to near-miss records"
           >
-            Close
+            ← Back
           </button>
+
 
           <button
             type="button"
@@ -1083,15 +1128,16 @@
             Print / Save PDF
           </button>
 
+
         </div>
 
       </div>
 
 
 
-      <!-- =========================================
+      <!-- ==================================================
            PRINTABLE REPORT
-      ========================================== -->
+      =================================================== -->
 
       <article
         id="reportDocument"
@@ -1103,11 +1149,14 @@
 
         <header class="report-header">
 
+
           <div class="report-brand">
+
 
             <div class="report-brand-mark">
               PL
             </div>
+
 
             <div>
 
@@ -1116,10 +1165,11 @@
               </h1>
 
               <p>
-                Health, Safety & Environment
+                Health, Safety &amp; Environment
               </p>
 
             </div>
+
 
           </div>
 
@@ -1136,6 +1186,7 @@
 
           </div>
 
+
         </header>
 
 
@@ -1143,6 +1194,7 @@
         <!-- REPORT REFERENCE -->
 
         <section class="report-reference">
+
 
           <div>
 
@@ -1169,6 +1221,7 @@
 
           </div>
 
+
         </section>
 
 
@@ -1176,6 +1229,7 @@
         <!-- BASIC INFORMATION -->
 
         <section class="report-section">
+
 
           <h3>
             1. Report Information
@@ -1226,6 +1280,7 @@
 
           </div>
 
+
         </section>
 
 
@@ -1233,6 +1288,7 @@
         <!-- RISK ASSESSMENT -->
 
         <section class="report-section">
+
 
           <h3>
             2. Risk Assessment
@@ -1298,6 +1354,7 @@
 
 
           </div>
+
 
         </section>
 
@@ -1374,6 +1431,7 @@
 
           <div class="report-evidence-box">
 
+
             <div
               id="reportEvidencePreview"
               class="report-evidence-preview"
@@ -1392,7 +1450,9 @@
 
             </div>
 
+
           </div>
+
 
         </section>
 
@@ -1401,6 +1461,7 @@
         <!-- RECORD INFORMATION -->
 
         <section class="report-section">
+
 
           <h3>
             7. Record Information
@@ -1423,6 +1484,7 @@
 
           </div>
 
+
         </section>
 
 
@@ -1431,6 +1493,7 @@
 
         <footer class="report-footer">
 
+
           <div>
 
             <strong>
@@ -1438,7 +1501,7 @@
             </strong>
 
             <span>
-              Near-Miss & Risk Dashboard
+              Near-Miss &amp; Risk Dashboard
             </span>
 
           </div>
@@ -1448,10 +1511,12 @@
             This report was generated from a locally stored HSE record.
           </div>
 
+
         </footer>
 
 
       </article>
+
 
     </div>
 
@@ -1459,9 +1524,9 @@
 
 
 
-  <!-- =========================================
+  <!-- ==================================================
        TOAST NOTIFICATION
-  ========================================== -->
+  =================================================== -->
 
   <div
     id="toast"
@@ -1477,9 +1542,9 @@
 
 
 
-  <!-- =========================================
+  <!-- ==================================================
        CUSTOM CONFIRMATION MODAL
-  ========================================== -->
+  =================================================== -->
 
   <div
     id="confirmModal"
@@ -1492,9 +1557,11 @@
 
     <div class="modal-box">
 
+
       <h3 id="confirmTitle">
         Confirm Action
       </h3>
+
 
       <p id="confirmMessage">
         Are you sure?
@@ -1502,6 +1569,7 @@
 
 
       <div class="modal-actions">
+
 
         <button
           type="button"
@@ -1511,6 +1579,7 @@
           Cancel
         </button>
 
+
         <button
           type="button"
           id="confirmOk"
@@ -1519,7 +1588,9 @@
           Delete
         </button>
 
+
       </div>
+
 
     </div>
 
@@ -1527,13 +1598,14 @@
 
 
 
-  <!-- =========================================
+  <!-- ==================================================
        JAVASCRIPT
        db.js MUST load before app.js
-  ========================================== -->
+  =================================================== -->
 
-  <script src="db.js"></script>
-  <script src="app.js"></script>
+  <script src="./db.js"></script>
+
+  <script src="./app.js"></script>
 
 
 </body>
