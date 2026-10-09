@@ -1909,6 +1909,45 @@ tbody tr:last-child td {
   @page {
     size: A4;
     margin: 12mm;
+
+      /* ==================================================
+     FIX REPORT LOGO SIZE IN WEB PRINT / PDF
+     ================================================== */
+
+  body.report-open .report-brand-mark {
+    width: 12mm !important;
+    height: 12mm !important;
+
+    min-width: 12mm !important;
+    min-height: 12mm !important;
+
+    max-width: 12mm !important;
+    max-height: 12mm !important;
+
+    flex: 0 0 12mm !important;
+
+    overflow: hidden !important;
+
+    border-radius: 3mm !important;
+  }
+
+
+  body.report-open .report-brand-logo {
+    display: block !important;
+
+    width: 12mm !important;
+    height: 12mm !important;
+
+    min-width: 12mm !important;
+    min-height: 12mm !important;
+
+    max-width: 12mm !important;
+    max-height: 12mm !important;
+
+    object-fit: cover !important;
+
+    border-radius: 3mm !important;
+  }
   }
 
 
